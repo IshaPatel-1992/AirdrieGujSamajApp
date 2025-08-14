@@ -1,18 +1,31 @@
 {
   "files": {
-    "main.css": "/static/css/main.3e65499b.css",
-    "main.js": "/static/js/main.92cb2c09.js",
-    "static/media/MSP2.png": "/static/media/MSP2.166bfb19d54f9bb4ccd3.png",
-    "static/media/Janvi Technologies (1) (1) REV-03.png": "/static/media/Janvi Technologies (1) (1) REV-03.1139494b993d655f9613.png",
-    "static/media/cyber-security1.jpeg": "/static/media/cyber-security1.0001250f621fd8f7b14b.jpeg",
-    "static/media/tele3.jpeg": "/static/media/tele3.feb77f5828ed95d94739.jpeg",
-    "static/media/b4.avif": "/static/media/b4.3a2141473e54f02d3a95.avif",
+    "main.css": "/static/css/main.b3ef400e.css",
+    "main.js": "/static/js/main.7cb4a993.js",
+    "static/media/Diwali1.jpg": "/static/media/Diwali1.c85b0ce9b2b6dbafea3a.jpg",
+    "static/media/Holi.jpg": "/static/media/Holi.f66b91cee07b962c4b0e.jpg",
+    "static/media/Picnic.jpg": "/static/media/Picnic.fca664b9bf0e7ac0db90.jpg",
+    "static/media/Navratri.png": "/static/media/Navratri.4569a88ce2a2870725e4.png",
+    "static/media/SonaliJewellersGujaratTitleSp1.jpg": "/static/media/SonaliJewellersGujaratTitleSp1.00d6bbc60dbefb874858.jpg",
+    "static/media/BannerImgGuj.jpg": "/static/media/BannerImgGuj.67021e1b24f11f968ffe.jpg",
+    "static/media/Team-Elevation-AirdrieGoldSp4.png": "/static/media/Team-Elevation-AirdrieGoldSp4.6ca5b5b310eb31bfdd06.png",
+    "static/media/Airdrie-Samaj-Logo-png.png": "/static/media/Airdrie-Samaj-Logo-png.ebcb7fe17ed5cb452fd7.png",
+    "static/media/Ishan-BMOSilverSp8.jpg": "/static/media/Ishan-BMOSilverSp8.42ed4c1db1312fa51ef0.jpg",
+    "static/media/KirtiKumarSoniAccountantGoldSp2.jpg": "/static/media/KirtiKumarSoniAccountantGoldSp2.a45d145b312d5ff10fbc.jpg",
+    "static/media/JayanNaikerRealtorGoldSp1.jpg": "/static/media/JayanNaikerRealtorGoldSp1.206449adaa0281ec0014.jpg",
+    "static/media/DhavalPatelRealtorGoldSp3.jpg": "/static/media/DhavalPatelRealtorGoldSp3.0b2d888df607488ab51f.jpg",
+    "static/media/MitalPatelRealtorSilverSp1.jpg": "/static/media/MitalPatelRealtorSilverSp1.a9c2c0dbdc749d9c2fec.jpg",
+    "static/media/iDriveAlbertaSilverSp6.jpg": "/static/media/iDriveAlbertaSilverSp6.7aab28f3162763abfb2c.jpg",
+    "static/media/Ankit-Patel-RealtorSilveSp7.jpg": "/static/media/Ankit-Patel-RealtorSilveSp7.96f648ea011746041d24.jpg",
+    "static/media/DhrumilPurohitRealtorSilveSp4.jpg": "/static/media/DhrumilPurohitRealtorSilveSp4.ab19ea7796f5189cce9b.jpg",
+    "static/media/JainishParmarOpticianSilverSp3.jpg.jpg": "/static/media/JainishParmarOpticianSilverSp3.jpg.65db307889a4f31513be.jpg",
+    "static/media/KamilVyasSilverSp5.jpg": "/static/media/KamilVyasSilverSp5.bb0c2d7dcbed02c71056.jpg",
     "index.html": "/index.html",
-    "main.3e65499b.css.map": "/static/css/main.3e65499b.css.map",
-    "main.92cb2c09.js.map": "/static/js/main.92cb2c09.js.map"
+    "main.b3ef400e.css.map": "/static/css/main.b3ef400e.css.map",
+    "main.7cb4a993.js.map": "/static/js/main.7cb4a993.js.map"
   },
   "entrypoints": [
-    "static/css/main.3e65499b.css",
-    "static/js/main.92cb2c09.js"
+    "static/css/main.b3ef400e.css",
+    "static/js/main.7cb4a993.js"
   ]
 }
