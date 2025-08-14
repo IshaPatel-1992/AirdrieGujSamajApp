@@ -1,27 +1,29 @@
-import React from 'react';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { useEffect } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Services from './components/Events';
-import ContactForm from './components/ContactForm';
-import Footer from './components/Footer';
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
-function App() {
-  useEffect(() => {
-    document.title = 'Janvi Technologies';
-  }, []);
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Events from "./pages/Events";
+import Gallery from "./pages/Gallery";
+import Contact from "./pages/Contact";
+import MembershipInfo from "./pages/MembershipInfo";
+
+export default function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-r from-teal-300 via-white to-teal-400 font-sans">
+    <Router>
       <Navbar />
-      <Hero />
-      <About />
-      <Events />
-      <ContactForm />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/membershipinfo" element={<MembershipInfo />} />
+      </Routes>
       <Footer />
-    </div>
+    </Router>
   );
 }
-
-export default App;
