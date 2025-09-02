@@ -11,6 +11,7 @@ import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
 import MembershipInfo from "./pages/MembershipInfo";
+import MembershipFormNew from "./pages/MembershipFormNew";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/membershipinfo" element={<MembershipInfo />} />
+        <Route path="/membershipformnew" element={<MembershipFormNew />} />
       </Routes>
       <Footer />
     </Router>

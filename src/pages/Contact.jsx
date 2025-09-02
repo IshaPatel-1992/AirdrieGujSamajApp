@@ -72,7 +72,7 @@ export default function Contact() {
               Join Airdrie Gujarati Samaj and take part in cultural celebrations, events, and a vibrant community!
             </p>
             <a
-              href="/membershipdetails"
+              href="/membershipinfo"
               className="inline-block bg-yellow-500 hover:bg-yellow-400 text-white font-semibold px-8 py-3 rounded-full shadow-md transition duration-300"
             >
               Become a Member
