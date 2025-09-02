@@ -97,7 +97,7 @@ export default function SponsorsSection() {
   const [selectedSponsor, setSelectedSponsor] = useState(null);
 
   return (
-    <section className="py-20 bg-brand-cream">
+    <section id= "sponsors" className="py-20 bg-brand-cream">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-4xl font-extrabold text-center text-brand mb-16 tracking-tight">
           Our Valued Sponsors

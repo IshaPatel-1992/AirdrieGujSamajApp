@@ -4,7 +4,7 @@ import aboutImage from '../assets/AboutUs/Team1.jpg'; // replace with your image
 
 export default function About() {
   return (
-    <section className="py-20 bg-brand-cream">
+    <section id="about" className="py-20 bg-brand-cream">
       <div className="max-w-7xl mx-auto px-6 animate-fadeIn">
         {/* Heading */}
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-center mb-16 text-brand tracking-tight">

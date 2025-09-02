@@ -1,16 +1,13 @@
-
 import Hero from "../components/Hero";
-import About from "../components/About";
-import Events from "../components/Events";
-import Sponsors from "../components/Sponsors";
+import AboutSection from "../components/AboutSection";
+import SponsorsSection from "../components/SponsorsSection";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <About />
-      <Events />
-      <Sponsors />
+      <AboutSection />
+      <SponsorsSection />
     </>
   );
 }
