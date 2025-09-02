@@ -23,7 +23,7 @@ export default function Contact() {
   };
 
   return (
-    <section className="py-16 bg-brand-cream">
+    <section id="contact"className="py-16 bg-brand-cream">
       <div className="p-6 max-w-5xl mx-auto animate-fadeIn text-brand">
         <h2 className="text-3xl font-heading font-bold tracking-wide text-center text-brand mb-10">
           Contact & Join Us

@@ -51,7 +51,7 @@ const SponsorGroup = ({ title, sponsors, imageClass, color }) => (
 
 export default function SponsorsSection() {
   return (
-    <section className="bg-[#fff8f1] py-20 relative overflow-hidden">
+    <section id="sponsors"className="bg-[#fff8f1] py-20 relative overflow-hidden">
       {/* Decorative background shapes */}
       <div className="absolute -top-10 -left-10 w-40 h-40 bg-yellow-200 rounded-full opacity-30 blur-2xl"></div>
       <div className="absolute bottom-0 right-0 w-60 h-60 bg-yellow-300 rounded-full opacity-20 blur-3xl"></div>
