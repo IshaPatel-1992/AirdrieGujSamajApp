@@ -1,6 +1,3 @@
-// components/ui/Button.jsx
-import React from 'react';
-
 export function Button({ children, className = '', ...props }) {
   return (
     <button

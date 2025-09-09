@@ -1,7 +1,3 @@
-// src/components/ui/LinkButton.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
-
 export function LinkButton({ to, children, className = '' }) {
   if (!to) {
     console.error('Missing "to" prop in LinkButton');

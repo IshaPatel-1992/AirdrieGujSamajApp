@@ -1,37 +1,49 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from "../assets/logo/Airdrie-Samaj-Logo-png.png";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
   const menuItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Events", path: "/events" },
     { name: "Gallery", path: "/gallery" },
     { name: "Membership Info", path: "/membershipinfo" },
-    { name: "Contact Us", path: "/contact" }
+    { name: "Contact Us", path: "/contact" },
   ];
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="bg-brand-light bg-opacity-90 backdrop-blur-md text-brand-text shadow-lg sticky top-0 z-50">
+    <header
+      className={`sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? "shadow-xl" : "shadow-lg"
+        } bg-gradient-to-r from-brand-saffron to-brand-mint text-brand-text backdrop-blur-md`}
+    >
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-        
         {/* Logo */}
-        <div className="flex items-center space-x-4">
-          <div className="bg-brand-yellow px-3 py-2 rounded-lg shadow-md flex items-center">
-            <img src={logo} alt="Logo" className="h-[60px] w-auto drop-shadow-sm" />
-          </div>
-        </div>
+        <Link to="/" className="flex items-center">
+          <img
+            src={logo}
+            alt="Logo"
+            className="h-[60px] w-auto hover:scale-105 transition-transform duration-300 drop-shadow-md"
+          />
+        </Link>
 
         {/* Desktop Menu */}
-        <nav className="hidden md:flex space-x-8 items-center">
-          {menuItems.map(item => (
+        <nav className="hidden md:flex space-x-4 items-center">
+          {menuItems.map((item) => (
             <Link
               key={item.name}
               to={item.path}
-              className="text-lg font-medium font-serif text-brand-text hover:text-brand-yellow transition-all duration-300 hover:underline underline-offset-4"
+              className="px-3 py-1 rounded-md font-medium text-brand-text transition-all duration-300 hover:bg-brand-light/30 hover:font-bold hover:shadow-md hover:scale-105"
             >
               {item.name}
             </Link>
@@ -43,6 +55,8 @@ export default function Navbar() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="text-2xl text-brand-text hover:text-brand-yellow transition"
+            aria-label="Toggle menu"
+            aria-expanded={isOpen}
           >
             {isOpen ? <FaTimes /> : <FaBars />}
           </button>
@@ -51,12 +65,12 @@ export default function Navbar() {
 
       {/* Mobile Dropdown */}
       {isOpen && (
-        <div className="md:hidden bg-brand-light bg-opacity-95 backdrop-blur-md px-6 pt-4 pb-6 space-y-4 shadow-md animate-fadeIn">
-          {menuItems.map(item => (
+        <div className="md:hidden bg-brand-light/95 backdrop-blur-md rounded-md px-6 pt-4 pb-6 space-y-2 shadow-lg animate-scaleFade">
+          {menuItems.map((item) => (
             <Link
               key={item.name}
               to={item.path}
-              className="block text-lg font-medium font-serif text-brand-text hover:text-brand-yellow transition-all duration-200"
+              className="block px-3 py-1 rounded-md font-medium text-brand-text transition-all duration-300 hover:bg-brand-light/30 hover:font-bold hover:shadow-md hover:scale-105"
               onClick={() => setIsOpen(false)}
             >
               {item.name}

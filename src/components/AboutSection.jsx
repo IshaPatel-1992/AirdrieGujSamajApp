@@ -14,9 +14,9 @@ export default function AboutSection() {
         {/* Content and Image */}
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           {/* Text */}
-          <div className="lg:w-1/2 text-gray-800 space-y-6 text-lg md:text-xl leading-relaxed font-serif">
+          <div className="lg:w-1/2 text-brand-text space-y-6 text-lg md:text-xl leading-relaxed font-serif">
             <p>
-              <strong className="text-brand hover:text-brand-yellow">Airdrie Gujarati Samaj</strong> is a nonprofit, cultural, and charitable association 
+              <strong className="text-brand hover:text-brand-saffron">Airdrie Gujarati Samaj</strong> is a nonprofit, cultural, and charitable association 
               established by the Gujarati community in Airdrie. It is dedicated to fostering <strong>community spirit</strong>, preserving our vibrant 
               <strong> Gujarati heritage</strong>, and creating a warm, inclusive environment for families and individuals of all ages.
             </p>
@@ -47,33 +47,50 @@ export default function AboutSection() {
 
         {/* Icons Section */}
         <div className="flex justify-center gap-16 mt-16 text-brand">
-          <div className="flex flex-col items-center">
-            <FaUsers className="text-6xl md:text-7xl mb-2 text-brand hover:text-brand-yellow transition" />
-            <span className="font-semibold text-gray-800 text-lg md:text-xl">Community</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <FaHandshake className="text-6xl md:text-7xl mb-2 text-brand hover:text-brand-yellow transition" />
-            <span className="font-semibold text-gray-800 text-lg md:text-xl">Support</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <FaLightbulb className="text-6xl md:text-7xl mb-2 text-brand hover:text-brand-yellow transition" />
-            <span className="font-semibold text-gray-800 text-lg md:text-xl">Innovation</span>
-          </div>
+          {[
+            { icon: FaUsers, label: 'Community' },
+            { icon: FaHandshake, label: 'Support' },
+            { icon: FaLightbulb, label: 'Innovation' },
+          ].map(({ icon: Icon, label }, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <Icon className="text-6xl md:text-7xl mb-2 text-brand hover:text-brand-green transition" />
+              <span className="font-semibold text-brand-text text-lg md:text-xl">{label}</span>
+            </div>
+          ))}
         </div>
 
-        {/* Membership Call-to-Action */}
-        <div className="bg-brand text-white p-12 rounded-3xl shadow-xl text-center mt-20">
-          <h3 className="text-3xl md:text-4xl font-semibold mb-4">Become a Member</h3>
-          <p className="mb-6 text-lg md:text-xl">
-            Ready to be part of something meaningful? Enjoy exclusive events and community programs.
-          </p>
-          <a
-            href="/membershipdetails"
-            className="bg-yellow-400 hover:bg-yellow-300 text-brand font-semibold px-10 py-4 rounded-full shadow-md transition transform hover:scale-105 text-lg md:text-xl"
-          >
-            Join Us
-          </a>
-        </div>
+{/* Membership Call-to-Action */}
+
+{ /* ===== Option 1: Deep Saffron (Bold & Festive) ===== 
+<div className="bg-brand-saffron/90 text-white p-12 rounded-3xl shadow-2xl text-center mt-20">
+  <h3 className="text-3xl md:text-4xl font-extrabold mb-4">Become a Member</h3>
+  <p className="mb-6 text-lg md:text-xl font-medium">
+    Ready to be part of something meaningful? Enjoy exclusive events and community programs.
+  </p>
+  <a
+    href="/membershipdetails"
+    className="bg-white hover:bg-yellow-100 text-brand-text font-semibold px-10 py-4 rounded-lg shadow-lg transition transform hover:scale-105 text-lg md:text-xl inline-block"
+  >
+    Join Us
+  </a>
+</div> */ }
+
+{/* ===== Option 2: Mint Gradient (Modern & Fresh) ===== */}
+<div className="bg-gradient-to-r from-brand-mint to-brand-cream text-brand-text p-12 rounded-3xl shadow-2xl text-center mt-20">
+  <h3 className="text-3xl md:text-4xl font-extrabold mb-4">Become a Member</h3>
+  <p className="mb-6 text-lg md:text-xl font-medium">
+    Ready to be part of something meaningful? Enjoy exclusive events and community programs.
+  </p>
+  <a
+    href="/membershipdetails"
+    className="bg-brand-saffron hover:bg-brand-yellow text-brand-text font-semibold px-10 py-4 rounded-lg shadow-lg transition transform hover:scale-105 text-lg md:text-xl inline-block"
+  >
+    Join Us
+  </a>
+</div>
+
+
+
       </div>
     </section>
   );

@@ -74,10 +74,31 @@ export default function MembershipFormNew() {
             onChange={handleChange}
             className="w-full border p-2 rounded"
           >
-            <option value="">Select...</option>
-            <option value="family">Family</option>
-            <option value="adult">Adult Single</option>
-            <option value="senior">Senior Citizen</option>
+            <option value="">-- Select Membership --</option>
+  
+  <option value="student">
+    Student Membership (Age 18–25) – $15.00 until 03/31/2026
+  </option>
+  
+  <option value="senior_single">
+    Senior Membership - Single (65+ Years) – $15.00 until 03/31/2026
+  </option>
+  
+  <option value="senior_couple">
+    Senior Membership - Couple (65+ Years) – $25.00 until 03/31/2026
+  </option>
+  
+  <option value="adult_single">
+    Adult Membership – $30.00 until 03/31/2026
+  </option>
+  
+  <option value="family_one_adult">
+    Family Membership - One Adult + Children under 18 – $25.00 until 03/31/2026
+  </option>
+  
+  <option value="family_two_adults">
+    Family Membership - Two Adults + Children under 18 – $40.00 until 03/31/2026
+  </option>
           </select>
           <div className="flex justify-between mt-4">
             <button onClick={prevStep} className="bg-gray-400 text-white px-4 py-2 rounded">
