@@ -1,15 +1,20 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import jwt from "jsonwebtoken";
+import { jwtDecode } from 'jwt-decode';
 import { OAuth2Client } from "google-auth-library";
-import dotenv from "dotenv";
 
-dotenv.config();
 
 const app = express();
-app.use(cors());
+
+// Allow requests from your frontend
+app.use(cors({
+  origin: "http://localhost:3000", // React app URL
+  credentials: true, // allow cookies if needed
+}));
+
 app.use(bodyParser.json());
+
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const JWT_SECRET = process.env.JWT_SECRET;

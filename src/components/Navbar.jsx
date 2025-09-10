@@ -1,17 +1,18 @@
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 import logo from "../assets/logo/Airdrie-Samaj-Logo-png.png";
-import { FaBars, FaTimes, FaUser } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import { GoogleLogin } from '@react-oauth/google';
-import axios from 'axios';
-import jwt_decode from 'jwt-decode';
-
-{ /* import MicrosoftLogin from "react-microsoft-login";
-import AppleLogin from "react-apple-login"; */ } 
+import { jwtDecode } from 'jwt-decode';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [loginDropdown, setLoginDropdown] = useState(false);
+  const [user, setUser] = useState(null);
+
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   const menuItems = [
     { name: "Home", path: "/" },
@@ -22,32 +23,65 @@ export default function Navbar() {
     { name: "Contact Us", path: "/contact" },
   ];
 
+  // Load user from localStorage on mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Google login success handler
-  const handleGoogleLogin = (response) => {
-    console.log("Google login response:", response);
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setLoginDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Google login success
+  const handleGoogleLogin = async (response) => {
+    const token = response.credential;
+    const userInfo = jwtDecode(token);
+    console.log("Google user info:", userInfo);
+
+    // Send token to backend
+    const res = await fetch("http://localhost:5000/auth/google", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token }),
+    });
+
+    const data = await res.json();
+
+    if (data.jwt) {
+      localStorage.setItem("jwt", data.jwt);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setUser(data.user);
+      alert(`Welcome, ${data.user.name}!`);
+      setLoginDropdown(false);
+    } else {
+      alert("Login failed");
+    }
   };
 
-  { /* // Microsoft login success handler
-  const handleMicrosoftLogin = (response) => {
-    console.log("Microsoft login response:", response);
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
+    setUser(null);
+    setLoginDropdown(false);
+    navigate("/"); // redirect home after logout
   };
-
-  // Apple login success handler
-  const handleAppleLogin = (response) => {
-    console.log("Apple login response:", response);
-  }; */ }
 
   return (
-    <header
-      className={`sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? "shadow-xl" : "shadow-lg"
-        } bg-gradient-to-r from-brand-saffron to-brand-mint text-brand-text backdrop-blur-md`}
-    >
+    <header className={`sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? "shadow-xl" : "shadow-lg"} bg-gradient-to-r from-brand-saffron to-brand-mint text-brand-text backdrop-blur-md`}>
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center">
@@ -70,27 +104,47 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {/* Login / Signup */}
-          <div className="flex items-center space-x-4">
-            <GoogleLogin
-              onSuccess={handleGoogleLogin}
-              onError={(error) => console.log("Google login error:", error)}
-              useOneTap
-              className="text-brand-text hover:text-brand-yellow transition-all duration-300"
-            />
-            {/* <MicrosoftLogin
-              clientId="YOUR_MICROSOFT_CLIENT_ID"
-              onSuccess={handleMicrosoftLogin}
-              onFailure={(error) => console.log("Microsoft login error:", error)}
-              className="text-brand-text hover:text-brand-yellow transition-all duration-300"
-            />
-            <AppleLogin
-              clientId="YOUR_APPLE_CLIENT_ID"
-              redirectURI="YOUR_REDIRECT_URI"
-              onSuccess={handleAppleLogin}
-              onFailure={(error) => console.log("Apple login error:", error)}
-              className="text-brand-text hover:text-brand-yellow transition-all duration-300"
-            /> */ }
+          {/* Profile Icon / Avatar */}
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setLoginDropdown(!loginDropdown)}
+              className="p-1 rounded-full hover:bg-brand-light/30 transition-transform duration-200"
+            >
+              {user ? (
+                <img
+                  src={user.picture}
+                  alt={user.name}
+                  className="w-10 h-10 rounded-full border-2 border-white hover:border-yellow-400 transition-all duration-200"
+                />
+              ) : (
+                <FaUserCircle className="text-2xl text-brand-text hover:text-brand-yellow transform transition-transform duration-200 hover:scale-110" />
+              )}
+            </button>
+
+            {loginDropdown && (
+              <div className="absolute right-0 mt-2 w-60 bg-white rounded-lg shadow-lg flex flex-col p-4 space-y-3 animate-fadeIn z-50">
+                {user ? (
+                  <>
+                    <span className="font-medium text-center">{user.name}</span>
+                    <button
+                      onClick={handleLogout}
+                      className="bg-brand-saffron text-white py-2 rounded-md hover:bg-yellow-500 transition"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <GoogleLogin
+                      onSuccess={handleGoogleLogin}
+                      onError={(err) => console.log("Google login error:", err)}
+                      className="w-full"
+                    />
+                    {/* Microsoft / Apple buttons can go here */}
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </nav>
 
@@ -98,7 +152,7 @@ export default function Navbar() {
         <div className="md:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-2xl text-brand-text hover:text-brand-yellow transition"
+            className="text-2xl text-brand-text hover:text-brand-yellow transition-transform duration-200"
             aria-label="Toggle menu"
             aria-expanded={isOpen}
           >
@@ -121,27 +175,40 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {/* Mobile Login / Signup */}
+          {/* Mobile Login / Profile */}
           <div className="flex flex-col items-center space-y-4 mt-4">
-            <GoogleLogin
-              onSuccess={handleGoogleLogin}
-              onError={(error) => console.log("Google login error:", error)}
-              useOneTap
-              className="text-brand-text hover:text-brand-yellow transition-all duration-300"
-            />
-            {/* <MicrosoftLogin
-              clientId="YOUR_MICROSOFT_CLIENT_ID"
-              onSuccess={handleMicrosoftLogin}
-              onFailure={(error) => console.log("Microsoft login error:", error)}
-              className="text-brand-text hover:text-brand-yellow transition-all duration-300"
-            />
-            <AppleLogin
-              clientId="YOUR_APPLE_CLIENT_ID"
-              redirectURI="YOUR_REDIRECT_URI"
-              onSuccess={handleAppleLogin}
-              onFailure={(error) => console.log("Apple login error:", error)}
-              className="text-brand-text hover:text-brand-yellow transition-all duration-300"
-            /> */ }
+            <button
+              onClick={() => setLoginDropdown(!loginDropdown)}
+              className="p-2 rounded-full bg-brand-light hover:bg-brand-light/70 transition-transform duration-200"
+            >
+              {user ? (
+                <img
+                  src={user.picture}
+                  alt={user.name}
+                  className="w-10 h-10 rounded-full border-2 border-white hover:border-yellow-400 transition-all duration-200"
+                />
+              ) : (
+                <FaUserCircle className="text-2xl transform transition-transform duration-200 hover:scale-110" />
+              )}
+            </button>
+            {loginDropdown && (
+              <div className="flex flex-col w-full space-y-2 p-2 bg-white rounded-lg shadow-lg animate-fadeIn">
+                {user ? (
+                  <button
+                    onClick={handleLogout}
+                    className="bg-brand-saffron text-white py-2 rounded-md hover:bg-yellow-500 transition"
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <GoogleLogin
+                    onSuccess={handleGoogleLogin}
+                    onError={(err) => console.log(err)}
+                    className="w-full"
+                  />
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
