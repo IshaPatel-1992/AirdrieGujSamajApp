@@ -82,7 +82,7 @@ export default function AboutSection() {
     Ready to be part of something meaningful? Enjoy exclusive events and community programs.
   </p>
   <a
-    href="/membershipdetails"
+    href="/membershipinfo"
     className="bg-brand-saffron hover:bg-brand-yellow text-brand-text font-semibold px-10 py-4 rounded-lg shadow-lg transition transform hover:scale-105 text-lg md:text-xl inline-block"
   >
     Join Us
