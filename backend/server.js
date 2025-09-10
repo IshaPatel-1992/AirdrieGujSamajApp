@@ -1,45 +1,59 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const mysql = require('mysql2');
-require('dotenv').config();
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import jwt from "jsonwebtoken";
+import { OAuth2Client } from "google-auth-library";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-
 app.use(cors());
 app.use(bodyParser.json());
 
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
-});
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const JWT_SECRET = process.env.JWT_SECRET;
 
-db.connect(err => {
-  if (err) {
-    console.error('MySQL connection error:', err);
-  } else {
-    console.log('✅ Connected to MySQL');
+const client = new OAuth2Client(GOOGLE_CLIENT_ID);
+
+// Endpoint for Google Login
+app.post("/auth/google", async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    // Verify Google token
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload(); // {sub, email, name, picture...}
+    console.log("Google payload:", payload);
+
+    // Create our own JWT
+    const customJwt = jwt.sign(
+      { email: payload.email, name: payload.name },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.json({ jwt: customJwt, user: payload });
+  } catch (err) {
+    console.error(err);
+    res.status(401).json({ error: "Invalid Google token" });
   }
 });
 
-app.post('/api/contact', (req, res) => {
-  const { name, email, message } = req.body;
+// Example protected route
+app.get("/profile", (req, res) => {
+  const authHeader = req.headers["authorization"];
+  if (!authHeader) return res.sendStatus(401);
 
-  if (!name || !email || !message) {
-    return res.status(400).json({ error: 'All fields are required' });
-  }
-
-  const sql = 'INSERT INTO messages (name, email, message) VALUES (?, ?, ?)';
-  db.query(sql, [name, email, message], (err, result) => {
-    if (err) {
-      console.error('Insert error:', err);
-      return res.status(500).json({ error: 'Database error' });
-    }
-    res.status(200).json({ message: 'Message saved successfully!' });
+  const token = authHeader.split(" ")[1];
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    res.json({ message: "Protected data", user });
   });
 });
 
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(5000, () => console.log("Server running on http://localhost:5000"));

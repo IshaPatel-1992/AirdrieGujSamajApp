@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import logo from "../assets/logo/Airdrie-Samaj-Logo-png.png";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaUser } from "react-icons/fa";
+import { GoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+
+{ /* import MicrosoftLogin from "react-microsoft-login";
+import AppleLogin from "react-apple-login"; */ } 
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +27,21 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Google login success handler
+  const handleGoogleLogin = (response) => {
+    console.log("Google login response:", response);
+  };
+
+  { /* // Microsoft login success handler
+  const handleMicrosoftLogin = (response) => {
+    console.log("Microsoft login response:", response);
+  };
+
+  // Apple login success handler
+  const handleAppleLogin = (response) => {
+    console.log("Apple login response:", response);
+  }; */ }
 
   return (
     <header
@@ -48,6 +69,29 @@ export default function Navbar() {
               {item.name}
             </Link>
           ))}
+
+          {/* Login / Signup */}
+          <div className="flex items-center space-x-4">
+            <GoogleLogin
+              onSuccess={handleGoogleLogin}
+              onError={(error) => console.log("Google login error:", error)}
+              useOneTap
+              className="text-brand-text hover:text-brand-yellow transition-all duration-300"
+            />
+            {/* <MicrosoftLogin
+              clientId="YOUR_MICROSOFT_CLIENT_ID"
+              onSuccess={handleMicrosoftLogin}
+              onFailure={(error) => console.log("Microsoft login error:", error)}
+              className="text-brand-text hover:text-brand-yellow transition-all duration-300"
+            />
+            <AppleLogin
+              clientId="YOUR_APPLE_CLIENT_ID"
+              redirectURI="YOUR_REDIRECT_URI"
+              onSuccess={handleAppleLogin}
+              onFailure={(error) => console.log("Apple login error:", error)}
+              className="text-brand-text hover:text-brand-yellow transition-all duration-300"
+            /> */ }
+          </div>
         </nav>
 
         {/* Mobile Menu Icon */}
@@ -76,6 +120,29 @@ export default function Navbar() {
               {item.name}
             </Link>
           ))}
+
+          {/* Mobile Login / Signup */}
+          <div className="flex flex-col items-center space-y-4 mt-4">
+            <GoogleLogin
+              onSuccess={handleGoogleLogin}
+              onError={(error) => console.log("Google login error:", error)}
+              useOneTap
+              className="text-brand-text hover:text-brand-yellow transition-all duration-300"
+            />
+            {/* <MicrosoftLogin
+              clientId="YOUR_MICROSOFT_CLIENT_ID"
+              onSuccess={handleMicrosoftLogin}
+              onFailure={(error) => console.log("Microsoft login error:", error)}
+              className="text-brand-text hover:text-brand-yellow transition-all duration-300"
+            />
+            <AppleLogin
+              clientId="YOUR_APPLE_CLIENT_ID"
+              redirectURI="YOUR_REDIRECT_URI"
+              onSuccess={handleAppleLogin}
+              onFailure={(error) => console.log("Apple login error:", error)}
+              className="text-brand-text hover:text-brand-yellow transition-all duration-300"
+            /> */ }
+          </div>
         </div>
       )}
     </header>
