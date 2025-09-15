@@ -1,64 +1,44 @@
 import express from "express";
+import dotenv from "dotenv";
 import cors from "cors";
-import bodyParser from "body-parser";
-import { jwtDecode } from 'jwt-decode';
-import { OAuth2Client } from "google-auth-library";
+import connectDB from "./config/db.js";
+import authRoutes from "./routes/authRoutes.js";
+/* import userRoutes from "./routes/userRoutes.js";
+import eventRoutes from "./routes/eventRoutes.js";
+import ticketRoutes from "./routes/ticketRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js"; */ 
 
-
+dotenv.config();
 const app = express();
+app.use(cors());
+app.use(express.json());
+connectDB();
 
-// Allow requests from your frontend
-app.use(cors({
-  origin: "http://localhost:3000", // React app URL
-  credentials: true, // allow cookies if needed
-}));
-
-app.use(bodyParser.json());
-
-
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
-const JWT_SECRET = process.env.JWT_SECRET;
-
-const client = new OAuth2Client(GOOGLE_CLIENT_ID);
-
-// Endpoint for Google Login
-app.post("/auth/google", async (req, res) => {
-  const { token } = req.body;
-
-  try {
-    // Verify Google token
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: GOOGLE_CLIENT_ID,
-    });
-
-    const payload = ticket.getPayload(); // {sub, email, name, picture...}
-    console.log("Google payload:", payload);
-
-    // Create our own JWT
-    const customJwt = jwt.sign(
-      { email: payload.email, name: payload.name },
-      JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-
-    res.json({ jwt: customJwt, user: payload });
-  } catch (err) {
-    console.error(err);
-    res.status(401).json({ error: "Invalid Google token" });
-  }
+// Simple health route to confirm server + DB ready
+app.get("/api/health", (req, res) => {
+return res.json({ ok: true, time: new Date().toISOString() });
 });
 
-// Example protected route
-app.get("/profile", (req, res) => {
-  const authHeader = req.headers["authorization"];
-  if (!authHeader) return res.sendStatus(401);
+// Mount API routes
+app.use("/api/auth", authRoutes);
 
-  const token = authHeader.split(" ")[1];
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    res.json({ message: "Protected data", user });
-  });
+// Routes
+/* app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/events", eventRoutes);
+app.use("/api/tickets", ticketRoutes);
+app.use("/api/admin", adminRoutes); */ 
+
+// Error handling
+app.use((err, req, res, next) => {
+  res.status(err.status || 500).json({ message: err.message });
 });
 
-app.listen(5000, () => console.log("Server running on http://localhost:5000"));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// For extra safety, handle unhandled rejections
+process.on("unhandledRejection", (err) => {
+console.error("Unhandled Rejection:", err);
+server.close(() => process.exit(1));
+});
