@@ -2,10 +2,11 @@ import { useState, useRef, useEffect } from "react";
 import { FaUserCircle, FaApple, FaMicrosoft } from "react-icons/fa";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { msalInstance } from "../auth/msalConfig"; // path to msalConfig.js
 
 export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
   const [open, setOpen] = useState(false);
-  const [manualForm, setManualForm] = useState(false); // toggle for manual login/signup
+  const [manualForm, setManualForm] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -28,50 +29,127 @@ export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [mobile]);
 
-  // Google login
+  // -------------------- Handlers --------------------
+
+  // Google Login
   const handleGoogleLogin = async (response) => {
     const token = response.credential;
     const userInfo = jwtDecode(token);
 
-    const res = await fetch("http://localhost:5000/auth/google", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token }),
-    });
-
-    const data = await res.json();
-    if (data.jwt) {
-      localStorage.setItem("jwt", data.jwt);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setUser(data.user);
-      setOpen(false);
-    } else {
-      alert("Login failed");
+    try {
+      const res = await fetch("http://localhost:5000/auth/google", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+      const data = await res.json();
+      if (data.jwt) {
+        localStorage.setItem("jwt", data.jwt);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setUser(data.user);
+        setOpen(false);
+      } else {
+        alert("Google login failed");
+      }
+    } catch (err) {
+      console.error("Google login error:", err);
     }
   };
 
-  // Manual login/signup (single endpoint that decides login vs signup)
+  // Microsoft Login
+  const handleMicrosoftLogin = async () => {
+    const loginRequest = { scopes: ["User.Read"] };
+    try {
+      const loginResponse = await msalInstance.loginPopup(loginRequest);
+      const tokenResponse = await msalInstance.acquireTokenSilent({
+        scopes: ["User.Read"],
+        account: loginResponse.account,
+      });
+      const accessToken = tokenResponse.accessToken;
+
+      const res = await fetch("http://localhost:5000/auth/microsoft", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accessToken }),
+      });
+      const data = await res.json();
+      if (data.jwt) {
+        localStorage.setItem("jwt", data.jwt);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setUser(data.user);
+        setOpen(false);
+      } else {
+        alert("Microsoft login failed");
+      }
+    } catch (err) {
+      console.error("Microsoft login error:", err);
+      alert("Microsoft login failed");
+    }
+  };
+
+  // Apple Login
+  const handleAppleLogin = async () => {
+    try {
+      const response = await window.AppleID.auth.signIn();
+      const idToken = response.authorization.id_token;
+
+      const res = await fetch("http://localhost:5000/auth/apple", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken }),
+      });
+      const data = await res.json();
+      if (data.jwt) {
+        localStorage.setItem("jwt", data.jwt);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setUser(data.user);
+        setOpen(false);
+      } else {
+        alert("Apple login failed");
+      }
+    } catch (err) {
+      console.error("Apple login error:", err);
+      alert("Apple login failed");
+    }
+  };
+
+  // Manual Login/Signup
   const handleManualSubmit = async (e) => {
     e.preventDefault();
-
-    const res = await fetch("http://localhost:5000/auth/manual", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-
-    const data = await res.json();
-    if (data.jwt) {
-      localStorage.setItem("jwt", data.jwt);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setUser(data.user);
-      setOpen(false);
-      setManualForm(false);
-    } else {
-      alert(data.message || "Login/Signup failed");
+    try {
+      const res = await fetch("http://localhost:5000/auth/manual", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.jwt) {
+        localStorage.setItem("jwt", data.jwt);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setUser(data.user);
+        setOpen(false);
+        setManualForm(false);
+      } else {
+        alert(data.message || "Login/Signup failed");
+      }
+    } catch (err) {
+      console.error("Manual login error:", err);
     }
   };
 
+  // Initialize AppleID SDK
+  useEffect(() => {
+    if (window.AppleID) {
+      window.AppleID.auth.init({
+        clientId: process.env.REACT_APP_APPLE_CLIENT_ID,
+        scope: "name email",
+        redirectURI: window.location.origin + "/apple-callback",
+        usePopup: true,
+      });
+    }
+  }, []);
+
+  // -------------------- UI --------------------
   const authButtonClass =
     "flex items-center justify-center w-full py-2 rounded-md text-white font-medium text-sm transition transform hover:scale-105";
 
@@ -115,7 +193,6 @@ export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
               </button>
             </>
           ) : manualForm ? (
-            // Manual Login/Signup Form
             <form onSubmit={handleManualSubmit} className="flex flex-col space-y-3">
               <input
                 type="email"
@@ -173,12 +250,18 @@ export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
               />
 
               {/* Microsoft */}
-              <button className={`${authButtonClass} bg-[#0078D4] mt-2`}>
+              <button
+                className={`${authButtonClass} bg-[#0078D4] mt-2`}
+                onClick={handleMicrosoftLogin}
+              >
                 <FaMicrosoft className="mr-2" /> Sign in with Microsoft
               </button>
 
               {/* Apple */}
-              <button className={`${authButtonClass} bg-black mt-2`}>
+              <button
+                className={`${authButtonClass} bg-black mt-2`}
+                onClick={handleAppleLogin}
+              >
                 <FaApple className="mr-2" /> Sign in with Apple
               </button>
 

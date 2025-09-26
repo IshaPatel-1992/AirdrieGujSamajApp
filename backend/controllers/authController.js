@@ -1,48 +1,89 @@
-import User from "../models/User.js";
-import bcrypt from "bcryptjs";
-import generateToken from "../utils/generateToken.js";
+const User = require("../models/User");
+const bcrypt = require("bcryptjs");
+const generateToken = require("../utils/generateToken");
+const { OAuth2Client } = require("google-auth-library");
 
-// @desc   Register new member manually
-// @route  POST /api/auth/register
-// @access Public
-export const registerUser = async (req, res) => {
-  try {
-    const { name, email, phone, password } = req.body;
+// Manual Signup/Login
 
-    // 1. Check if user already exists
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
-    }
+exports.manualAuth = async (req, res) => {
+  const { email, firstName, lastName, password } = req.body;
 
-    // 2. Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+  let user = await User.findOne({ email });
 
-    // 3. Create new user
-    const user = await User.create({
-      name,
+  if (user) {
+    // Login
+    if (!user.password) return res.status(400).json({ message: "Please login via your social provider" });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+  } else {
+    // Signup
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user = await User.create({
       email,
-      phone,
+      firstName,
+      lastName,
       password: hashedPassword,
-      authProvider: "manual",
-      membershipStatus: "pending", // Admin can approve later if needed
+      provider: "manual"
     });
-
-    if (user) {
-      res.status(201).json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        role: user.role,
-        membershipStatus: user.membershipStatus,
-        token: generateToken(user._id), // JWT token
-      });
-    } else {
-      res.status(400).json({ message: "Invalid user data" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
   }
+
+  const token = generateToken(user);
+  res.json({ jwt: token, user });
+};
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+// Google OAuth
+exports.googleAuth = async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    const ticket = await googleClient.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+
+    let user = await User.findOne({ email: payload.email });
+
+    if (!user) {
+      user = await User.create({
+        email: payload.email,
+        firstName: payload.given_name,
+        lastName: payload.family_name,
+        picture: payload.picture,
+        provider: "google"
+      });
+    }
+
+    const jwtToken = generateToken(user);
+    res.json({ jwt: jwtToken, user });
+  } catch (error) {
+    res.status(400).json({ message: "Google login failed" });
+  }
+};
+
+// Additional OAuth providers (Microsoft, Apple) can be implemented similarly
+exports.microsoftAuth = async (req, res) => {
+  const { accessToken } = req.body;
+
+  const profileRes = await fetch("https://graph.microsoft.com/v1.0/me", {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  const profile = await profileRes.json();
+
+  let user = await User.findOne({ email: profile.mail || profile.userPrincipalName });
+
+  if (!user) {
+    user = await User.create({
+      email: profile.mail || profile.userPrincipalName,
+      firstName: profile.givenName,
+      lastName: profile.surname,
+      provider: "microsoft"
+    });
+  }
+
+  const jwtToken = generateToken(user);
+  res.json({ jwt: jwtToken, user });
 };

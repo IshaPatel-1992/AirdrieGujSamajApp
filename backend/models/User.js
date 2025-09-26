@@ -1,43 +1,13 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    phone: {
-      type: String,
-    },
-    password: {
-      type: String, // For manual registration (hashed)
-    },
-    authProvider: {
-      type: String,
-      enum: ["google", "microsoft", "manual"],
-      default: "manual",
-    },
-    role: {
-      type: String,
-      enum: ["member", "admin"],
-      default: "member",
-    },
-    membershipStatus: {
-      type: String,
-      enum: ["active", "expired", "pending"],
-      default: "pending",
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-  },
-  { timestamps: true }
-);
+const userSchema = new mongoose.Schema({
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String }, // Only for manual signup
+  picture: { type: String },
+  provider: { type: String, enum: ["manual", "google", "microsoft", "apple"], default: "manual" },
+  role: { type: String, default: "user" },
+}, { timestamps: true });
 
-export default mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);
