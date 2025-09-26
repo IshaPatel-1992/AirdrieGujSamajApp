@@ -5,6 +5,14 @@ import { jwtDecode } from "jwt-decode";
 
 export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
   const [open, setOpen] = useState(false);
+  const [manualForm, setManualForm] = useState(false); // toggle for manual login/signup
+  const [formData, setFormData] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+  });
+
   const dropdownRef = useRef(null);
 
   // Close dropdown on outside click (desktop only)
@@ -13,6 +21,7 @@ export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setOpen(false);
+        setManualForm(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -38,6 +47,28 @@ export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
       setOpen(false);
     } else {
       alert("Login failed");
+    }
+  };
+
+  // Manual login/signup (single endpoint that decides login vs signup)
+  const handleManualSubmit = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch("http://localhost:5000/auth/manual", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await res.json();
+    if (data.jwt) {
+      localStorage.setItem("jwt", data.jwt);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setUser(data.user);
+      setOpen(false);
+      setManualForm(false);
+    } else {
+      alert(data.message || "Login/Signup failed");
     }
   };
 
@@ -70,7 +101,7 @@ export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
           className={`${
             mobile
               ? "mt-2 flex flex-col w-full space-y-2 p-3 bg-white rounded-lg shadow-lg animate-fadeIn"
-              : "absolute right-0 mt-2 w-60 bg-white rounded-lg shadow-lg flex flex-col p-4 space-y-3 animate-fadeIn z-50"
+              : "absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-lg flex flex-col p-4 space-y-3 animate-fadeIn z-50"
           }`}
         >
           {user ? (
@@ -83,6 +114,55 @@ export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
                 Logout
               </button>
             </>
+          ) : manualForm ? (
+            // Manual Login/Signup Form
+            <form onSubmit={handleManualSubmit} className="flex flex-col space-y-3">
+              <input
+                type="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
+                className="border p-2 rounded-md"
+              />
+              <input
+                type="text"
+                placeholder="First Name"
+                value={formData.firstName}
+                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                required
+                className="border p-2 rounded-md"
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                value={formData.lastName}
+                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                required
+                className="border p-2 rounded-md"
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                required
+                className="border p-2 rounded-md"
+              />
+              <button
+                type="submit"
+                className="bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700 transition font-medium"
+              >
+                Continue
+              </button>
+              <button
+                type="button"
+                onClick={() => setManualForm(false)}
+                className="text-sm text-gray-500 hover:underline"
+              >
+                Back
+              </button>
+            </form>
           ) : (
             <>
               {/* Google */}
@@ -103,7 +183,10 @@ export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
               </button>
 
               {/* Manual */}
-              <button className={`${authButtonClass} bg-gray-800 mt-2`}>
+              <button
+                onClick={() => setManualForm(true)}
+                className={`${authButtonClass} bg-gray-800 mt-2`}
+              >
                 Sign In / Sign Up
               </button>
             </>
