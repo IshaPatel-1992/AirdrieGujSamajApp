@@ -41,9 +41,11 @@ export const manualAuth = async (req, res) => {
 
 // Google OAuth
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+console.log("Google ID token:", googleClient);
 
 export const googleAuth = async (req, res) => {
   const { token } = req.body;
+  console.log("Received Google token:", token?.slice(0, 20) + "...");
 
   try {
     const ticket = await googleClient.verifyIdToken({
@@ -51,6 +53,7 @@ export const googleAuth = async (req, res) => {
       audience: process.env.GOOGLE_CLIENT_ID,
     });
     const payload = ticket.getPayload();
+    console.log("Verified Google user:", payload);
 
     let user = await User.findOne({ email: payload.email });
 
@@ -64,7 +67,7 @@ export const googleAuth = async (req, res) => {
       });
     }
 
-    const jwtToken = generateToken(user);
+    const jwtToken = generateToken(user._id);
     res.json({ jwt: jwtToken, user });
   } catch (error) {
     console.error("Google auth error:", error);
