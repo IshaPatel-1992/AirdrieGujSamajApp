@@ -1,19 +1,16 @@
 import express from "express";
+import { manualAuth, googleAuth, microsoftAuth } from "../controllers/authController.js";
+
 const router = express.Router();
 
-
-// Minimal route so server starts even if you haven't built auth yet
+// Health check
 router.get("/ping", (req, res) => {
-res.json({ ok: true, msg: "auth route working" });
+  res.json({ ok: true, msg: "auth route working" });
 });
 
-const authController = require("../controllers/authController");
-
-router.post("/manual", authController.manualAuth);
-router.post("/google", authController.googleAuth);
-router.post("/microsoft", authController.microsoftAuth);
+// Auth endpoints
+router.post("/manual", manualAuth);
+router.post("/google", googleAuth);
+router.post("/microsoft", microsoftAuth);
 
 export default router;
-
-
-//module.exports = router;
