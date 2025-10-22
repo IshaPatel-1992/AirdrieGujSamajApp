@@ -50,9 +50,13 @@ export default function Hero() {
         </h1>
 
         {/* Tagline */}
-        <h3 className="mt-6 inline-block text-lg md:text-xl font-medium text-brand-saffron bg-white/80 backdrop-blur px-6 py-2 rounded-lg shadow-lg">
-          Let’s grow together, Let’s glow together
-        </h3>
+        
+        
+<h3 className="mt-6 inline-block text-lg md:text-xl font-semibold text-white bg-gradient-to-r from-brand-saffron to-brand-green px-8 py-3 rounded-lg shadow-lg">
+  Let’s grow together, Let’s glow together
+</h3>
+
+
 
         {/* CTA Buttons */}
         <div className="mt-8 flex flex-wrap gap-4 justify-center">

@@ -37,7 +37,7 @@ export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
     const userInfo = jwtDecode(token);
 
     try {
-      const res = await fetch("http://localhost:5000/auth/google", {
+      const res = await fetch("http://localhost:5000/api/auth/google", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token }),
@@ -67,7 +67,7 @@ export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
       });
       const accessToken = tokenResponse.accessToken;
 
-      const res = await fetch("http://localhost:5000/auth/microsoft", {
+      const res = await fetch("http://localhost:5000/api/auth/microsoft", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ accessToken }),
@@ -93,7 +93,7 @@ export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
       const response = await window.AppleID.auth.signIn();
       const idToken = response.authorization.id_token;
 
-      const res = await fetch("http://localhost:5000/auth/apple", {
+      const res = await fetch("http://localhost:5000/api/auth/apple", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ idToken }),
@@ -117,7 +117,7 @@ export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
   const handleManualSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/auth/manual", {
+      const res = await fetch("http://localhost:5000/api/auth/manual", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -136,18 +136,6 @@ export default function AuthDropdown({ user, setUser, onLogout, mobile }) {
       console.error("Manual login error:", err);
     }
   };
-
-  // Initialize AppleID SDK
-  useEffect(() => {
-    if (window.AppleID) {
-      window.AppleID.auth.init({
-        clientId: process.env.REACT_APP_APPLE_CLIENT_ID,
-        scope: "name email",
-        redirectURI: window.location.origin + "/apple-callback",
-        usePopup: true,
-      });
-    }
-  }, []);
 
   // -------------------- UI --------------------
   const authButtonClass =

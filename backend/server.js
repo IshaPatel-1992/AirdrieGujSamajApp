@@ -1,4 +1,3 @@
-// backend/server.js
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -7,40 +6,29 @@ import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 
-// Initialize Express
 const app = express();
 
-// -------------------- Middleware --------------------
-app.use(cors());
+// Middleware
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 
-// -------------------- Database --------------------
+// Database
 connectDB();
 
-// -------------------- Routes --------------------
+// Routes
+app.use("/api/auth", authRoutes);
+
+// Health check
 app.get("/api/health", (req, res) => {
   res.json({ ok: true, time: new Date().toISOString() });
 });
 
-app.use("/api/auth", authRoutes);
-
-// -------------------- Error Handling --------------------
+// Error handling
 app.use((err, req, res, next) => {
-  console.error("Error:", err);
+  console.error(err);
   res.status(err.status || 500).json({ message: err.message || "Server Error" });
 });
 
-// -------------------- Server Startup --------------------
+// Start server
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () =>
-  console.log(`✅ Server running on port ${PORT}`)
-);
-
-// -------------------- Graceful Shutdown --------------------
-// ✅ Prevent duplicate listener registrations with Nodemon restarts
-if (process.listenerCount("unhandledRejection") === 0) {
-  process.on("unhandledRejection", (err) => {
-    console.error("❌ Unhandled Rejection:", err);
-    server.close(() => process.exit(1));
-  });
-}
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));

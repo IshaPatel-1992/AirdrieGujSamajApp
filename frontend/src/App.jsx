@@ -14,7 +14,7 @@ import Login from "./pages/Login";
 
 export default function App() {
   return (
-    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+ <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
       <Router>
         <Navbar />
         <Routes>
