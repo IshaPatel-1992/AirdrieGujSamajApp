@@ -11,14 +11,24 @@ import Contact from "./pages/Contact";
 import MembershipInfo from "./pages/MembershipInfo";
 import MembershipFormNew from "./pages/MembershipFormNew";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import PrivateRoute from "./components/PrivateRoute";
 
 export default function App() {
   return (
- <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
       <Router>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
           <Route path="/about" element={<About />} />
           <Route path="/sponsors" element={<Sponsors />} />
           <Route path="/events" element={<Events />} />
