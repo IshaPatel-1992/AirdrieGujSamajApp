@@ -49,14 +49,23 @@ export default function Hero() {
           />
         </h1>
 
-        {/* Tagline */}
-        
-        
-<h3 className="mt-6 inline-block text-lg md:text-xl font-semibold text-white bg-gradient-to-r from-brand-saffron to-brand-green px-8 py-3 rounded-lg shadow-lg">
-  Let’s grow together, Let’s glow together
-</h3>
+        {/* Main Tagline */}
+        <h3 className="mt-6 inline-block text-lg md:text-xl font-semibold text-white bg-gradient-to-r from-brand-saffron to-brand-green px-8 py-3 rounded-lg shadow-lg">
+          Let’s grow together, Let’s glow together
+        </h3>
 
-
+        {/* Membership Tagline + Notify Button */}
+        <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <p className="text-white text-base md:text-lg font-medium bg-black/30 px-6 py-2 rounded-md text-center">
+            Don’t miss out! Membership registration begins March 2026
+          </p>
+          <Link
+            to="/contact?from=membership"
+            className="bg-yellow-500 hover:bg-yellow-400 text-white font-semibold px-6 py-2 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
+          >
+            Notify Me
+          </Link>
+        </div>
 
         {/* CTA Buttons */}
         <div className="mt-8 flex flex-wrap gap-4 justify-center">
