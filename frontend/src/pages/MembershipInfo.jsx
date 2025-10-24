@@ -36,10 +36,16 @@ export default function MembershipInfo() {
         </table>
       </div>
       <div className="text-center">
-        <p className="mb-4 text-lg font-medium text-brand">Ready to join? Fill out our membership application form now!</p>
-        <a href="/membershipformnew" className="inline-block w-full sm:w-auto bg-yellow-500 hover:bg-yellow-400 hover:scale-105 transform transition duration-300 text-white font-semibold px-8 py-3 rounded-full shadow-lg">
-          Apply Now 📝
+        <p className="mb-4 text-lg font-medium text-brand">Ready to join? Membership registration starts March 2026</p>
+        <a
+          href="/contact"
+          className="inline-block w-full sm:w-auto bg-yellow-500 hover:bg-yellow-400 hover:scale-105 transform transition duration-300 text-white font-semibold px-8 py-3 rounded-full shadow-lg"
+        >
+          Notify Me 📩
         </a>
+        { /* <a href="/membershipformnew" className="inline-block w-full sm:w-auto bg-yellow-500 hover:bg-yellow-400 hover:scale-105 transform transition duration-300 text-white font-semibold px-8 py-3 rounded-full shadow-lg">
+          Apply Now 📝
+        </a> */ }
       </div>
     </div>
   );

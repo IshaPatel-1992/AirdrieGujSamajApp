@@ -1,29 +1,56 @@
-import React, { useRef } from 'react';
-import emailjs from '@emailjs/browser';
+import React, { useRef, useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
 import { Button } from "../components/ui/Button.jsx";
+import { useLocation } from "react-router-dom";
 
 export default function Contact() {
   const formRef = useRef();
+  const location = useLocation();
+  const [notifyMembership, setNotifyMembership] = useState(false);
 
-  const sendEmail = (e) => {
+  // ✅ Auto-check "Notify Me" if user came from membership section
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get("from") === "membership") {
+      setNotifyMembership(true);
+    }
+  }, [location.search]);
+
+  const sendEmail = async (e) => {
     e.preventDefault();
-    emailjs.sendForm(
-      import.meta.env.VITE_EMAILJS_SERVICE_ID,
-      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-      formRef.current,
-      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-    )
-    .then(() => {
-      alert('Message sent successfully!');
-      formRef.current.reset();
-    })
-    .catch((error) => {
-      console.error('Error sending email:', error);
-    });
+
+    const formData = new FormData(formRef.current);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        alert("Message submitted successfully!");
+        formRef.current.reset();
+        setNotifyMembership(false);
+      } else {
+        alert("Error submitting form. Please try again.");
+      }
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Backend error:", errorData);
+        alert("Error submitting form: " + errorData.message);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Something went wrong. Please try again later.");
+    }
   };
 
+
+
   return (
-    <section id="contact"className="py-16 bg-brand-cream">
+    <section id="contact" className="py-16 bg-brand-cream">
       <div className="p-6 max-w-5xl mx-auto animate-fadeIn text-brand">
         <h2 className="text-3xl font-heading font-bold tracking-wide text-center text-brand mb-10">
           Contact & Join Us
@@ -55,12 +82,30 @@ export default function Contact() {
               rows="6"
               placeholder="Your Message"
               className="w-full p-2 border-2 border-[#4b1d1d] rounded focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              required
             ></textarea>
 
-            <Button type="submit" className="mt-2 w-full bg-brand hover:bg-brand-light text-white">
-              Send Message
-            </Button>
+            {/* ✅ Notify Me Checkbox */}
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                name="notify_membership"
+                checked={notifyMembership}
+                onChange={(e) => setNotifyMembership(e.target.checked)}
+                className="h-5 w-5 text-yellow-500 border-2 border-[#4b1d1d] rounded focus:ring-yellow-400"
+              />
+              <span className="text-brand">
+                Notify me about membership updates or newsletters from Airdrie Gujarati Samaj
+              </span>
+            </label>
+
+            <center>
+              <Button
+                type="submit"
+                className="inline-block bg-yellow-500 hover:bg-yellow-400 text-white font-semibold px-8 py-3 rounded-full shadow-md transition duration-300"
+              >
+                Send Message
+              </Button>
+            </center>
           </form>
 
           {/* Membership CTA */}
@@ -69,7 +114,8 @@ export default function Contact() {
               Become a Part of Something Special
             </h3>
             <p className="text-brand mb-6 px-4">
-              Join Airdrie Gujarati Samaj and take part in cultural celebrations, events, and a vibrant community!
+              Join Airdrie Gujarati Samaj and take part in cultural celebrations,
+              events, and a vibrant community!
             </p>
             <a
               href="/membershipinfo"

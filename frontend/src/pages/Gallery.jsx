@@ -4,17 +4,17 @@ const photos = [
   {
     src: 'https://source.unsplash.com/800x600/?festival,celebration',
     alt: 'Diwali Celebration',
-    caption: 'Diwali Celebration 2024',
+    caption: 'Diwali Celebration 2025',
   },
   {
     src: 'https://source.unsplash.com/800x600/?dance,garba',
     alt: 'Navaratri Celebration',
-    caption: 'Navaratri Garba Night 2024',
+    caption: 'Navaratri Garba Night 2025',
   },
   {
     src: 'https://source.unsplash.com/800x600/?picnic,outdoor',
     alt: 'Community Picnic',
-    caption: 'Annual Community Picnic 2024',
+    caption: 'Annual Community Picnic 2025',
   },
 ];
 

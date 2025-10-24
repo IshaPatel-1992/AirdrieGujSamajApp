@@ -6,6 +6,7 @@ import gold1 from '../assets/sponsors/GoldSponsors/JayanNaikerRealtorGoldSp1.jpg
 import gold2 from '../assets/sponsors/GoldSponsors/KirtiKumarSoniAccountantGoldSp2.jpg';
 import gold3 from '../assets/sponsors/GoldSponsors/DhavalPatelRealtorGoldSp3.jpg';
 import gold4 from '../assets/sponsors/GoldSponsors/Team-Elevation-AirdrieGoldSp4.png';
+import gold5 from '../assets/sponsors/GoldSponsors/FlexcareGoldSp4.jpeg';
 import silver1 from '../assets/sponsors/SilverSponsors/MitalPatelRealtorSilverSp1.jpg';
 import silver2 from '../assets/sponsors/SilverSponsors/DarshanNashitSilverSp2.jpg';
 import silver3 from '../assets/sponsors/SilverSponsors/JainishParmarOpticianSilverSp3.jpg.jpg';
@@ -14,6 +15,7 @@ import silver5 from '../assets/sponsors/SilverSponsors/KamilVyasSilverSp5.jpg';
 import silver6 from '../assets/sponsors/SilverSponsors/iDriveAlbertaSilverSp6.jpg';
 import silver7 from '../assets/sponsors/SilverSponsors/Ankit-Patel-RealtorSilveSp7.jpg';
 import silver8 from '../assets/sponsors/SilverSponsors/Ishan-BMOSilverSp8.jpg';
+import silver9 from '../assets/sponsors/SilverSponsors/BombaySpicesSilverSp9.jpg'
 
 // Sponsor arrays
 const titleSponsors = [{ name: 'Sonali Jewellers', image: title1 }];
@@ -22,6 +24,7 @@ const goldSponsors = [
   { name: 'Kirti Kumar Soni - Accountant', image: gold2 },
   { name: 'Dhaval Patel - Realtor', image: gold3 },
   { name: 'Team Elevation', image: gold4 },
+  { name: 'Flexcare Physiotherapy', image: gold5 },
 ];
 const silverSponsors = [
   { name: 'Mital Patel - Realtor', image: silver1 },
@@ -32,6 +35,7 @@ const silverSponsors = [
   { name: 'iDrive Alberta', image: silver6 },
   { name: 'Ankit Patel - Realtor', image: silver7 },
   { name: 'Ishan BMO', image: silver8 },
+  { name: 'Bombay Spices', image: silver9 },
 ];
 
 const SponsorGroup = ({ title, sponsors, color, onSponsorClick }) => {

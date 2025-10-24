@@ -65,7 +65,7 @@ export default function Events() {
     <section id="events" className="py-24 bg-brand-cream">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-4xl font-extrabold text-center text-brand mb-12 tracking-tight">
-          Our Events
+          Our Upcoming Events for 2026
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {events.map(({ title, description, image, month }) => (

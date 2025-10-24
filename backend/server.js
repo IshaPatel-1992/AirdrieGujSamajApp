@@ -4,15 +4,21 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-
-
+import contactRoutes from "./routes/contactRoutes.js"; // ✅ Add this line
 
 dotenv.config();
 
 const app = express();
 
 // Middleware
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({
+  origin: "http://localhost:3000", // frontend URL
+  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
+
+//app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 
 // Database
@@ -21,6 +27,7 @@ connectDB();
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/contact", contactRoutes); // ✅ Now this works
 
 // Health check
 app.get("/api/health", (req, res) => {
