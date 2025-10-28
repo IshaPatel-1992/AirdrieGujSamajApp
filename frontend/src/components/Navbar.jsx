@@ -67,7 +67,7 @@ export default function Navbar() {
             </Link>
           ))}
           {/* Auth */}
-          <AuthDropdown user={user} setUser={setUser} onLogout={handleLogout} />
+           { /* <AuthDropdown user={user} setUser={setUser} onLogout={handleLogout} /> */ }
         </nav>
 
         {/* Mobile Menu Icon */}
