@@ -37,7 +37,7 @@ app.use(cors({
 }));
 
 // ✅ Important: handle preflight OPTIONS requests
-app.options("*", cors());
+app.options("/*", cors());
 
 // Parse JSON
 app.use(express.json());
