@@ -13,7 +13,7 @@ const app = express();
 // Middleware
 app.use(cors({
   //origin: "http://localhost:3000", // frontend local URL
-  origin:"https://airdrie-guj-samaj-app-zyzs.vercel.app/", // frontend Vercel URL
+  origin:"https://airdrie-guj-samaj-app-zyzs.vercel.app", // frontend Vercel URL
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
