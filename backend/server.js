@@ -4,31 +4,51 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import contactRoutes from "./routes/contactRoutes.js"; // ✅ Add this line
+import contactRoutes from "./routes/contactRoutes.js";
 
 dotenv.config();
 
 const app = express();
 
-// Middleware
+// ✅ Updated CORS setup
+const allowedOrigins = [
+  "https://airdrie-guj-samaj-app-zyzs.vercel.app", // Vercel frontend
+  "http://localhost:3000" // local dev
+];
+
+app.use((req, res, next) => {
+  console.log("🌐 Incoming request from:", req.headers.origin);
+  next();
+});
+
 app.use(cors({
-  //origin: "http://localhost:3000", // frontend local URL
-  origin:"https://airdrie-guj-samaj-app-zyzs.vercel.app", // frontend Vercel URL
-  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
+  origin: (origin, callback) => {
+    // allow no-origin requests (curl, Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    console.log("❌ Blocked by CORS:", origin);
+    return callback(new Error("CORS not allowed for this origin"));
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-//app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+// ✅ Important: handle preflight OPTIONS requests
+app.options("*", cors());
+
+// Parse JSON
 app.use(express.json());
 
-// Database
+// Connect to MongoDB
 connectDB();
 
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
-app.use("/api/contact", contactRoutes); // ✅ Now this works
+app.use("/api/contact", contactRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {
@@ -37,7 +57,7 @@ app.get("/api/health", (req, res) => {
 
 // Error handling
 app.use((err, req, res, next) => {
-  console.error(err);
+  console.error("🔥 Error:", err.message);
   res.status(err.status || 500).json({ message: err.message || "Server Error" });
 });
 
