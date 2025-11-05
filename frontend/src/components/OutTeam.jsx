@@ -5,7 +5,7 @@ import jayeshImg from "../assets/AboutUs/team/JayeshPandya.jpg";
 import kamalImg from "../assets/AboutUs/team/KamalPatel.jpg";
 import jayanImg from "../assets/AboutUs/team/JayanNaiker.jpg";
 import rudreshImg from "../assets/AboutUs/team/RudreshSoni.jpg";
-import ishitaImg from "../assets/AboutUs/team/IshitaShah.jpg";
+import eshitaImg from "../assets/AboutUs/team/EshitaShah.jpg";
 import vaidehiImg from "../assets/AboutUs/team/VaidehiChokshi.jpg";
 import mayushImg from "../assets/AboutUs/team/MayushPatel.jpg";
 import manImg from "../assets/AboutUs/team/MansukhRaval.jpg";
@@ -33,16 +33,16 @@ export default function OurTeam() {
       title: "Cultural Activities",
       members: [
         { 
-          name: "Ishita Shah", 
+          name: "Eshita Shah", 
           role: "Coordinator", 
-          img: ishitaImg,
+          img: eshitaImg,
           bio: "As a Cultural Director, I lead initiatives that celebrate traditions and foster unity. I take pride in uplifting others and bringing people together through shared cultural experiences. My focus is on creating inclusive, meaningful programs that strengthen all generations and honour our heritage."
         },
         { 
           name: "Vaidehi Chokshi", 
           role: "Coordinator", 
           img: vaidehiImg,
-          bio: "Vaidehi has over 10 years of experience in the IT industry and supports our community with her technical and administrative skills. She is also a talented part-time aesthetician and makeup artist."
+          bio: "Vaidehi Chokshi has over 10 years of experience in the IT industry and supports our community with her technical and administrative skills. She is also a talented part-time aesthetician and makeup artist."
         },
       ],
     },
@@ -66,7 +66,7 @@ export default function OurTeam() {
         { name: "Isha Patel", 
           role: "Member", 
           img: ishaImg, 
-          bio: "Isha Patel is a Full Stack Developer and IT Specialist who supports the community with technology solutions and digital services, helping make processes smoother, user-friendly, and efficient as an active member of the Airdrie Gujarati Samaj." },
+          bio: "I am a Full Stack Developer and IT Specialist, and I support the community with technology solutions and digital services. I help make processes smoother, user-friendly, and efficient as an active member of the Airdrie Gujarati Samaj." },
         { name: "Roshan Patel", role: "Member" },
       ],
     },

@@ -35,8 +35,8 @@ export default function Contact() {
     }));
   };
 
-  // ✅ Form submission
-  const sendEmail = async (e) => {
+  // ✅ Form submission with notification at the top
+   /* const sendEmail = async (e) => {
     e.preventDefault();
 
     // Validation (optional: you can extend this)
@@ -64,25 +64,21 @@ export default function Contact() {
       const result = await response.json();
 
       if (response.ok) {
-        setNotification(result.message);
-        setNotificationType("success");
+  setNotification(result.message || "Form submitted successfully!");
+  setNotificationType("success");
 
-        // Reset form only for successful submission
-        if (
-          result.message === "Form submitted successfully!" ||
-          result.message === "Notification preference updated successfully!"
-        ) {
-          setFormData({
-            user_name: "",
-            user_email: "",
-            message: "",
-            notify_membership: false,
-          });
-        }
-      } else {
-        setNotification(result.message || "Error submitting form.");
-        setNotificationType("error");
-      }
+  // ✅ Always clear form on success
+  setFormData({
+    user_name: "",
+    user_email: "",
+    message: "",
+    notify_membership: false,
+  });
+} else {
+  setNotification(result.message || "Error submitting form.");
+  setNotificationType("error");
+}
+
 
       setTimeout(() => setNotification(null), 5000);
     } catch (error) {
@@ -93,7 +89,55 @@ export default function Contact() {
     } finally {
       setLoading(false);
     }
-  };
+  }; */ 
+
+  const sendEmail = async (e) => {
+  e.preventDefault();
+
+  // Validation
+  if (!formData.user_name || !formData.user_email) {
+    alert("Please fill in your name and email.");
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const API_BASE_URL = "https://airdriegujsamajapp.onrender.com";
+    const response = await fetch(`${API_BASE_URL}/api/contact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...formData,
+        notify_membership: formData.notify_membership ? "Yes" : "No",
+      }),
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      // ✅ Show success alert
+      alert(result.message || "Form submitted successfully!");
+
+      // ✅ Clear form
+      setFormData({
+        user_name: "",
+        user_email: "",
+        message: "",
+        notify_membership: false,
+      });
+    } else {
+      // ✅ Show error alert
+      alert(result.message || "Error submitting form.");
+    }
+  } catch (error) {
+    console.error("Error submitting form:", error);
+    alert("Something went wrong. Please try again later.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <section id="contact" className="py-16 bg-brand-cream">
