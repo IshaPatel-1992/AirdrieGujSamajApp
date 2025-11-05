@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-// Images
+// ===== Image Imports =====
 import title1 from '../assets/sponsors/TitleSponsors/SonaliJewellersGujaratTitleSp1.jpg';
 import gold1 from '../assets/sponsors/GoldSponsors/JayanNaikerRealtorGoldSp1.jpg';
 import gold2 from '../assets/sponsors/GoldSponsors/KirtiKumarSoniAccountantGoldSp2.jpg';
@@ -16,10 +16,17 @@ import silver5 from '../assets/sponsors/SilverSponsors/KamilVyasSilverSp5.jpg';
 import silver6 from '../assets/sponsors/SilverSponsors/iDriveAlbertaSilverSp6.jpg';
 import silver7 from '../assets/sponsors/SilverSponsors/Ankit-Patel-RealtorSilveSp7.jpg';
 import silver8 from '../assets/sponsors/SilverSponsors/Ishan-BMOSilverSp8.jpg';
-import silver9 from '../assets/sponsors/SilverSponsors/BombaySpicesSilverSp9.jpg'
+import silver9 from '../assets/sponsors/SilverSponsors/BombaySpicesSilverSp9.jpg';
 
-// Sponsor arrays
-const titleSponsors = [{ name: 'Sonali Jewellers', image: title1 }];
+// ===== New Event Sponsor Images =====
+import event1 from '../assets/sponsors/EventSponsors/RishapPatelConstructionBusiness.jpg';
+//import event2 from '../assets/sponsors/EventSponsors/EventSponsor2.jpg';
+
+// ===== Sponsor Arrays =====
+const titleSponsors = [
+  { name: 'Sonali Jewellers', image: title1 },
+];
+
 const goldSponsors = [
   { name: 'Jayan Naiker - Realtor', image: gold1 },
   { name: 'Kirti Kumar Soni - Accountant', image: gold2 },
@@ -28,6 +35,7 @@ const goldSponsors = [
   { name: 'StanFord Resort', image: gold5 },
   { name: 'Flexcare Physiotherapy', image: gold6 },
 ];
+
 const silverSponsors = [
   { name: 'Mital Patel - Realtor', image: silver1 },
   { name: 'Darshan Nashit', image: silver2 },
@@ -40,11 +48,17 @@ const silverSponsors = [
   { name: 'Bombay Spices', image: silver9 },
 ];
 
+// ===== New Event Sponsors =====
+const eventSponsors = [
+  { name: 'Rishap Patel', image: event1 },
+  //{ name: 'XYZ Productions', image: event2 },
+];
+
+// ===== SponsorGroup Component =====
 const SponsorGroup = ({ title, sponsors, color, onSponsorClick }) => {
-  // Grid layout
   const gridClasses =
     title === 'Title Sponsor'
-      ? 'grid grid-cols-1 max-w-lg mx-auto' // Single column
+      ? 'grid grid-cols-1 max-w-lg mx-auto'
       : 'grid sm:grid-cols-2 md:grid-cols-3 gap-8';
 
   return (
@@ -63,14 +77,15 @@ const SponsorGroup = ({ title, sponsors, color, onSponsorClick }) => {
       <div className={`${gridClasses} gap-8`}>
         {sponsors.map((sponsor, index) => {
           let borderClasses = '';
+
           if (title === 'Title Sponsor') {
             borderClasses = 'border-4 border-yellow-500 shadow-yellow-300';
           } else if (title === 'Gold Sponsors') {
-            borderClasses =
-              'border-4 border-yellow-400 shadow-lg shadow-yellow-200';
+            borderClasses = 'border-4 border-yellow-400 shadow-lg shadow-yellow-200';
           } else if (title === 'Silver Sponsors') {
-            borderClasses =
-              'border-4 border-gray-300 shadow-lg shadow-gray-200';
+            borderClasses = 'border-4 border-gray-300 shadow-lg shadow-gray-200';
+          } else if (title === 'Event Sponsors') {
+            borderClasses = 'border-4 border-purple-400 shadow-lg shadow-purple-200';
           }
 
           return (
@@ -99,11 +114,12 @@ const SponsorGroup = ({ title, sponsors, color, onSponsorClick }) => {
   );
 };
 
+// ===== Main Sponsors Section =====
 export default function SponsorsSection() {
   const [selectedSponsor, setSelectedSponsor] = useState(null);
 
   return (
-    <section id= "sponsors" className="py-20 bg-brand-cream">
+    <section id="sponsors" className="py-20 bg-brand-cream">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-4xl font-extrabold text-center text-brand mb-16 tracking-tight">
           Our Valued Sponsors
@@ -130,6 +146,14 @@ export default function SponsorsSection() {
           title="Silver Sponsors"
           sponsors={silverSponsors}
           color="#c0c0c0"
+          onSponsorClick={setSelectedSponsor}
+        />
+
+        {/* Event Sponsors */}
+        <SponsorGroup
+          title="Event Sponsors"
+          sponsors={eventSponsors}
+          color="#6b5b95"
           onSponsorClick={setSelectedSponsor}
         />
       </div>

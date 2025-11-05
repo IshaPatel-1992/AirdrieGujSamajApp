@@ -59,38 +59,30 @@ export default function AboutSection() {
           ))}
         </div>
 
-{/* Membership Call-to-Action */}
+        {/* Membership Call-to-Action */}
+        <div className="bg-gradient-to-r from-brand-mint to-brand-cream text-brand-text p-12 rounded-3xl shadow-2xl text-center mt-20 space-y-6">
+          <h3 className="text-3xl md:text-4xl font-extrabold">Become a Member</h3>
+          <p className="text-lg md:text-xl font-medium">
+            Ready to be part of something meaningful? Enjoy exclusive events and community programs.
+          </p>
 
-{ /* ===== Option 1: Deep Saffron (Bold & Festive) ===== 
-<div className="bg-brand-saffron/90 text-white p-12 rounded-3xl shadow-2xl text-center mt-20">
-  <h3 className="text-3xl md:text-4xl font-extrabold mb-4">Become a Member</h3>
-  <p className="mb-6 text-lg md:text-xl font-medium">
-    Ready to be part of something meaningful? Enjoy exclusive events and community programs.
-  </p>
-  <a
-    href="/membershipdetails"
-    className="bg-white hover:bg-yellow-100 text-brand-text font-semibold px-10 py-4 rounded-lg shadow-lg transition transform hover:scale-105 text-lg md:text-xl inline-block"
-  >
-    Join Us
-  </a>
-</div> */ }
+          <div className="flex justify-center gap-6 flex-wrap">
+            <a
+              href="/membershipinfo"
+              className="bg-brand-saffron hover:bg-brand-yellow text-brand-text font-semibold px-10 py-4 rounded-lg shadow-lg transition transform hover:scale-105 text-lg md:text-xl inline-block"
+            >
+              Join Us
+            </a>
 
-{/* ===== Option 2: Mint Gradient (Modern & Fresh) ===== */}
-<div className="bg-gradient-to-r from-brand-mint to-brand-cream text-brand-text p-12 rounded-3xl shadow-2xl text-center mt-20">
-  <h3 className="text-3xl md:text-4xl font-extrabold mb-4">Become a Member</h3>
-  <p className="mb-6 text-lg md:text-xl font-medium">
-    Ready to be part of something meaningful? Enjoy exclusive events and community programs.
-  </p>
-  <a
-    href="/membershipinfo"
-    className="bg-brand-saffron hover:bg-brand-yellow text-brand-text font-semibold px-10 py-4 rounded-lg shadow-lg transition transform hover:scale-105 text-lg md:text-xl inline-block"
-  >
-    Join Us
-  </a>
-</div>
-
-
-
+            {/* 👇 New “Our Team” Button */}
+            <a
+              href="/ourteam"
+              className="bg-white hover:bg-brand-cream text-brand-text font-semibold px-10 py-4 rounded-lg shadow-lg transition transform hover:scale-105 text-lg md:text-xl inline-block border border-brand-saffron"
+            >
+              Our Team
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );

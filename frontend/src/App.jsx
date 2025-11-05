@@ -13,6 +13,7 @@ import MembershipFormNew from "./pages/MembershipFormNew";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
+import OurTeam from "./components/OutTeam";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
             }
           />
           <Route path="/about" element={<About />} />
+          <Route path="/ourteam" element={<OurTeam />} />
           <Route path="/sponsors" element={<Sponsors />} />
           <Route path="/events" element={<Events />} />
           <Route path="/gallery" element={<Gallery />} />
