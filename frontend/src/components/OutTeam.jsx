@@ -3,10 +3,10 @@ import React from "react";
 // import available member images
 import jayeshImg from "../assets/AboutUs/team/JayeshPandya.jpg";
 import kamalImg from "../assets/AboutUs/team/KamalPatel.jpg";
-import jayanImg from "../assets/AboutUs/team/JayanNaiker.jpg";
-import rudreshImg from "../assets/AboutUs/team/RudreshSoni.jpg";
+import jayanImg from "../assets/AboutUs/team/JayanNaikerImg1.png";
+import rudreshImg from "../assets/AboutUs/team/RudreshSoniImg1.png";
 import eshitaImg from "../assets/AboutUs/team/EshitaShah.jpg";
-import vaidehiImg from "../assets/AboutUs/team/VaidehiChokshi.jpg";
+import vaidehiImg from "../assets/AboutUs/team/VaidehiChokshiImg1.png";
 import mayushImg from "../assets/AboutUs/team/MayushPatel.jpg";
 import manImg from "../assets/AboutUs/team/MansukhRaval.jpg";
 import DashrathImg from "../assets/AboutUs/team/DashrathDesai.jpg";
@@ -18,7 +18,10 @@ export default function OurTeam() {
     {
       title: "Executive Board",
       members: [
-        { name: "Jayesh Pandya", role: "President", img: jayeshImg },
+        { name: "Jayesh Pandya", 
+          role: "President", 
+          img: jayeshImg, 
+          bio: "Jayesh Pandya is the pioneering President of the Airdrie Gujarati Samaj and a dedicated entrepreneur. He holds a Bachelor of Science degree and is known for his leadership, community involvement, and commitment to promoting Gujarati culture in Airdrie." },
         { name: "Kamal Patel", role: "Vice President", img: kamalImg },
         { name: "Jayan Naiker", role: "Secretary", img: jayanImg },
         { 
