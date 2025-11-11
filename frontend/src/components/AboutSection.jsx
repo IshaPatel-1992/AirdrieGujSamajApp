@@ -7,7 +7,7 @@ export default function AboutSection() {
     <section id="aboutsection" className="py-20 bg-brand-cream">
       <div className="max-w-7xl mx-auto px-6 animate-fadeIn">
         {/* Heading */}
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-center mb-16 text-brand tracking-tight">
+        <h2 className="text-3xl md:text-5xl lg:text-6xl font-heading font-extrabold text-center mb-16 text-brand tracking-tight">
           About Us
         </h2>
 
