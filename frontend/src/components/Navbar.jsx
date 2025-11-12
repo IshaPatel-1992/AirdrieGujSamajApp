@@ -54,13 +54,14 @@ export default function Navbar() {
 
   <div className="relative max-w-7xl mx-auto px-4 py-3 flex justify-between items-center z-10">
     {/* Logo */}
-    <Link to="/" className="flex items-center">
-      <img
-        src={logo}
-        alt="Logo"
-        className="h-[60px] w-auto hover:scale-105 transition-transform duration-300 drop-shadow-md"
-      />
-    </Link>
+<Link to="/" className="flex items-center">
+  <img
+    src={logo}
+    alt="Logo"
+    className="h-[80px] w-auto hover:scale-105 transition-transform duration-300 drop-shadow-md"
+  />
+</Link>
+
 
     {/* Desktop Menu */}
     <nav className="hidden md:flex space-x-4 items-center">
