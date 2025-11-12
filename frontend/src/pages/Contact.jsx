@@ -103,7 +103,8 @@ export default function Contact() {
   setLoading(true);
 
   try {
-    const API_BASE_URL = "https://airdriegujsamajapp.onrender.com";
+    //const API_BASE_URL = "https://airdriegujsamajapp.onrender.com";
+    const API_BASE_URL = "https://api.airdriegujaratisamaj.ca" // new backend API";
     const response = await fetch(`${API_BASE_URL}/api/contact`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

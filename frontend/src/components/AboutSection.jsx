@@ -4,7 +4,7 @@ import aboutImage from '../assets/AboutUs/Team1.jpg'; // replace with your image
 
 export default function AboutSection() {
   return (
-    <section id="aboutsection" className="py-20 bg-brand-cream">
+    <section id="aboutsection" className="bg-maple-soft text-white p-10 rounded-lg">
       <div className="max-w-7xl mx-auto px-6 animate-fadeIn">
         {/* Heading */}
         <h2 className="text-3xl md:text-5xl lg:text-6xl font-heading font-extrabold text-center mb-16 text-brand tracking-tight">
@@ -44,21 +44,6 @@ export default function AboutSection() {
             />
           </div>
         </div>
-
-        {/* Icons Section */}
-        <div className="flex justify-center gap-16 mt-16 text-brand">
-          {[
-            { icon: FaUsers, label: 'Community' },
-            { icon: FaHandshake, label: 'Support' },
-            { icon: FaLightbulb, label: 'Innovation' },
-          ].map(({ icon: Icon, label }, i) => (
-            <div key={i} className="flex flex-col items-center">
-              <Icon className="text-6xl md:text-7xl mb-2 text-brand hover:text-brand-green transition" />
-              <span className="font-semibold text-brand-text text-lg md:text-xl">{label}</span>
-            </div>
-          ))}
-        </div>
-
         {/* Membership Call-to-Action */}
         <div className="bg-gradient-to-r from-brand-mint to-brand-cream text-brand-text p-12 rounded-3xl shadow-2xl text-center mt-20 space-y-6">
           <h3 className="text-3xl md:text-4xl font-extrabold">Become a Member</h3>

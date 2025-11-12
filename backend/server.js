@@ -12,8 +12,11 @@ const app = express();
 
 // ✅ Allowed origins
 const allowedOrigins = [
-  "https://airdrie-guj-samaj-app-zyzs.vercel.app",
-  "http://localhost:3000",
+  "https://airdrie-guj-samaj-app-zyzs.vercel.app", // intial frontend deployment
+  "https://app.airdriegujaratisamaj.ca", // new frontend
+  "http://localhost:3000", // local dev
+  "https://airdriegujsamajapp.onrender.com", // old backend API
+  "https://api.airdriegujaratisamaj.ca", // new backend API
 ];
 
 // ✅ CORS setup (no manual app.options)

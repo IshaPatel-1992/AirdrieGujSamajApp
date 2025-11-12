@@ -1,12 +1,12 @@
-import React from 'react';
-
-import Diwali from '../assets/Events/Diwali1.jpg';
-import Holi from '../assets/Events/Holi.jpg';
-import Navratri from '../assets/Events/Navratri.png';
-import Picnic from '../assets/Events/Picnic.jpg';
-import Katha from '../assets/Events/Satyanarayan Katha.jpg';
-import Movie from '../assets/Events/MovieTheatre.jpg';
-import Camping from '../assets/Events/Camping1.jpg';
+import React from "react";
+import Diwali from "../assets/Events/Diwali1.jpg";
+import Holi from "../assets/Events/Holi.jpg";
+import Navratri from "../assets/Events/Navratri.png";
+import Picnic from "../assets/Events/Picnic.jpg";
+import Katha from "../assets/Events/Satyanarayan Katha.jpg";
+import Movie from "../assets/Events/MovieTheatre.jpg";
+import Camping from "../assets/Events/Camping1.jpg";
+import bgImage from "../assets/bgImages/shutterstock_2101333912.jpg"; // Background image
 
 const events = [
   {
@@ -62,35 +62,44 @@ const events = [
 
 export default function Events() {
   return (
-    <section id="events" className="py-24 bg-brand-cream">
-      <div className="max-w-6xl mx-auto px-4">
-        { /*<h2 className="text-4xl font-extrabold text-center text-brand mb-12 tracking-tight">
-          Our Upcoming Events for 2026
-        </h2> */ }
-        {/* Heading */}
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-heading font-extrabold text-center mb-16 text-brand tracking-tight">
+    <section
+      id="events"
+      className="relative py-24 overflow-hidden"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-brand-mint/70 via-brand-cream/60 to-brand-saffron/70"></div>
+
+      <div className="relative max-w-6xl mx-auto px-4 animate-fadeIn">
+        <h2 className="text-3xl md:text-5xl lg:text-6xl font-heading font-extrabold text-center mb-16 text-brand-saffron tracking-tight drop-shadow-xl">
           Our Upcoming Events for 2026
         </h2>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {events.map(({ title, description, image, month }) => (
+          {events.map((event, index) => (
             <div
-              key={title}
-              className="relative overflow-hidden rounded-2xl shadow-lg group transform transition duration-500 hover:scale-105 bg-white"
+              key={event.title}
+              className={`relative overflow-hidden rounded-2xl shadow-xl group transform transition duration-500 hover:scale-105 bg-white`}
+              style={{ animation: `fadeInUp 0.8s ease forwards`, animationDelay: `${index * 150}ms`, opacity: 0 }}
             >
               {/* Event image */}
               <img
-                src={image}
-                alt={title}
+                src={event.image}
+                alt={event.title}
                 className="w-full h-64 object-cover rounded-t-2xl"
               />
 
               {/* Text content */}
               <div className="p-6 flex flex-col justify-between h-full">
                 <div>
-                  <h3 className="text-xl font-bold text-brand mb-1">{title}</h3>
-                  <p className="text-gray-600 text-sm mb-3 font-medium">{month}</p>
-                  <p className="text-gray-800 text-sm leading-relaxed">{description}</p>
+                  <h3 className="text-xl font-bold text-brand mb-1">{event.title}</h3>
+                  <p className="text-gray-600 text-sm mb-3 font-medium">{event.month}</p>
+                  <p className="text-gray-800 text-sm leading-relaxed">{event.description}</p>
                 </div>
 
                 {/* View Details Button */}
@@ -107,6 +116,14 @@ export default function Events() {
           ))}
         </div>
       </div>
+
+      {/* Fade-in keyframes for mobile + desktop */}
+      <style>{`
+        @keyframes fadeInUp {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </section>
   );
 }

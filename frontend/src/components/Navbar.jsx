@@ -41,72 +41,73 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-shadow duration-300 ${
-        scrolled ? "shadow-xl" : "shadow-md"
-      } bg-gradient-to-r from-brand-saffron to-brand-mint text-brand-text backdrop-blur-md`}
-    >
-      <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Logo */}
-        <Link to="/" className="flex items-center">
-          <img
-            src={logo}
-            alt="Logo"
-            className="h-[60px] w-auto hover:scale-105 transition-transform duration-300 drop-shadow-md"
-          />
+  className="sticky top-0 z-50 transition-shadow duration-300 shadow-md backdrop-blur-md"
+  style={{
+    backgroundImage: `url(${require('../assets/Footer/shutterstock_2506871797.jpg')})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+  }}
+>
+  {/* Overlay gradient for readability */}
+  <div className="absolute inset-0 bg-gradient-to-r from-brand-saffron/80 to-brand-mint/80"></div>
+
+  <div className="relative max-w-7xl mx-auto px-4 py-3 flex justify-between items-center z-10">
+    {/* Logo */}
+    <Link to="/" className="flex items-center">
+      <img
+        src={logo}
+        alt="Logo"
+        className="h-[60px] w-auto hover:scale-105 transition-transform duration-300 drop-shadow-md"
+      />
+    </Link>
+
+    {/* Desktop Menu */}
+    <nav className="hidden md:flex space-x-4 items-center">
+      {menuItems.map((item) => (
+        <Link
+          key={item.name}
+          to={item.path}
+          className="px-3 py-1 rounded-md font-medium text-gray-900 transition-all duration-300 hover:text-white hover:bg-black/20 hover:font-bold hover:shadow-md hover:scale-105"
+        >
+          {item.name}
         </Link>
+      ))}
+      <AuthDropdown user={user} setUser={setUser} onLogout={handleLogout} />
+    </nav>
 
-        {/* Desktop Menu */}
-        <nav className="hidden md:flex space-x-4 items-center">
-          {menuItems.map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              className="px-3 py-1 rounded-md font-medium text-brand-text transition-all duration-300 hover:bg-brand-light/30 hover:font-bold hover:shadow-md hover:scale-105"
-            >
-              {item.name}
-            </Link>
-          ))}
-          {/* Auth */}
-           { /* <AuthDropdown user={user} setUser={setUser} onLogout={handleLogout} /> */ }
-        </nav>
+    {/* Mobile Menu Icon */}
+    <div className="md:hidden">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="text-2xl text-white hover:text-yellow-400 transition-transform duration-200"
+        aria-label="Toggle menu"
+      >
+        {isOpen ? <FaTimes /> : <FaBars />}
+      </button>
+    </div>
+  </div>
 
-        {/* Mobile Menu Icon */}
-        <div className="md:hidden">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-2xl text-brand-text hover:text-brand-yellow transition-transform duration-200"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <FaTimes /> : <FaBars />}
-          </button>
-        </div>
+  {/* Mobile Dropdown */}
+  {isOpen && (
+    <div className="md:hidden bg-white/95 backdrop-blur-md rounded-md px-6 pt-4 pb-6 space-y-4 shadow-lg animate-scaleFade">
+      {menuItems.map((item) => (
+        <Link
+          key={item.name}
+          to={item.path}
+          className="block px-3 py-2 rounded-md font-medium text-gray-900 transition-all duration-300 hover:bg-gray-200 hover:font-bold hover:shadow-md hover:scale-105"
+          onClick={() => setIsOpen(false)}
+        >
+          {item.name}
+        </Link>
+      ))}
+
+      <div className="flex justify-center mt-4">
+        <AuthDropdown user={user} setUser={setUser} onLogout={handleLogout} mobile />
       </div>
+    </div>
+  )}
+</header>
 
-      {/* Mobile Dropdown */}
-      {isOpen && (
-        <div className="md:hidden bg-brand-light/95 backdrop-blur-md rounded-md px-6 pt-4 pb-6 space-y-4 shadow-lg animate-scaleFade">
-          {menuItems.map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              className="block px-3 py-2 rounded-md font-medium text-brand-text transition-all duration-300 hover:bg-brand-light/40 hover:font-bold hover:shadow-md hover:scale-105"
-              onClick={() => setIsOpen(false)}
-            >
-              {item.name}
-            </Link>
-          ))}
-
-          {/* Mobile Auth */}
-          <div className="flex justify-center mt-4">
-            <AuthDropdown
-              user={user}
-              setUser={setUser}
-              onLogout={handleLogout}
-              mobile
-            />
-          </div>
-        </div>
-      )}
-    </header>
   );
 }
