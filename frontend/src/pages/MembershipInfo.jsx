@@ -53,12 +53,12 @@ export default function MembershipInfo() {
       <div className="absolute inset-0 bg-gradient-to-r from-brand-mint/70 via-brand-cream/50 to-brand-saffron/70 z-10" />
 
       {/* Content */}
-      <div className="relative z-20 p-6 sm:p-10 max-w-5xl mx-auto animate-fadeIn text-white">
-        <h2 className="text-3xl sm:text-4xl font-heading font-bold tracking-wide text-center mb-10 drop-shadow-lg">
+      <div className="relative z-20 p-6 sm:p-10 max-w-5xl mx-auto animate-fadeIn">
+        <h2 className="text-3xl sm:text-4xl font-heading font-bold tracking-wide text-center mb-10 drop-shadow-lg" style={{ color: "#d4503e" }}>
           Membership
         </h2>
 
-        <p className="mb-6 text-lg leading-relaxed font-sans text-center drop-shadow-md">
+        <p className="mb-6 text-lg leading-relaxed font-sans text-center drop-shadow-md" >
           Join Airdrie Gujarati Samaj to celebrate tradition and unity. Your membership supports our cultural programs and events.
         </p>
 
