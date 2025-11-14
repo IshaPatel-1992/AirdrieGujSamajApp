@@ -7,7 +7,7 @@ export default function AboutSection() {
     <section id="aboutsection" className="bg-maple-soft text-white p-10 rounded-lg">
       <div className="max-w-7xl mx-auto px-6 animate-fadeIn">
         {/* Heading */}
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-heading font-extrabold text-center mb-16 text-brand tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-heading font-bold tracking-wide text-center mb-10 drop-shadow-lg" style={{ color: "#d4503e" }}>
           About Us
         </h2>
 

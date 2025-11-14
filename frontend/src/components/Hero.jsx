@@ -16,7 +16,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative h-[90vh] bg-cover bg-center flex flex-col justify-center items-center text-center px-4"
+      className="relative h-[70vh] bg-cover bg-center flex flex-col justify-center items-center text-center px-4"
       style={{ backgroundImage: `url(${banners[currentIndex]})` }}
     >
       {/* Dark + Brand Overlay */}

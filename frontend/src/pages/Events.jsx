@@ -65,20 +65,16 @@ export default function Events() {
     <section
       id="events"
       className="relative py-24 overflow-hidden"
-      style={{
-        backgroundImage: `url(${bgImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
     >
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-brand-mint/70 via-brand-cream/60 to-brand-saffron/70"></div>
 
       <div className="relative max-w-6xl mx-auto px-4 animate-fadeIn">
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-heading font-extrabold text-center mb-16 text-brand-saffron tracking-tight drop-shadow-xl">
-          Our Upcoming Events for 2026
-        </h2>
+        <h2 className="text-3xl sm:text-4xl font-heading font-bold tracking-wide text-center mb-10 drop-shadow-lg" style={{ color: "#d4503e" }}>
+          Upcoming Events for 2026
+        </h2> 
+
+        
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {events.map((event, index) => (

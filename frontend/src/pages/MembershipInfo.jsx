@@ -37,18 +37,6 @@ export default function MembershipInfo() {
 
   return (
     <section className="relative w-full overflow-hidden">
-      {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-      >
-        <source src={membershipVideo} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-
       {/* Overlay for readability */}
       <div className="absolute inset-0 bg-gradient-to-r from-brand-mint/70 via-brand-cream/50 to-brand-saffron/70 z-10" />
 

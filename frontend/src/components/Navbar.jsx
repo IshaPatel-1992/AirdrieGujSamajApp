@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import logo from "../assets/logo/Airdrie-Samaj-Logo-png.png";
 import { FaBars, FaTimes } from "react-icons/fa";
-import AuthDropdown from "./AuthDropdown";
+//import AuthDropdown from "./AuthDropdown";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,7 +74,7 @@ export default function Navbar() {
           {item.name}
         </Link>
       ))}
-      <AuthDropdown user={user} setUser={setUser} onLogout={handleLogout} />
+      { /* <AuthDropdown user={user} setUser={setUser} onLogout={handleLogout} /> */}
     </nav>
 
     {/* Mobile Menu Icon */}
@@ -103,9 +103,9 @@ export default function Navbar() {
         </Link>
       ))}
 
-      <div className="flex justify-center mt-4">
+      { /* <div className="flex justify-center mt-4">
         <AuthDropdown user={user} setUser={setUser} onLogout={handleLogout} mobile />
-      </div>
+      </div> */ }
     </div>
   )}
 </header>
