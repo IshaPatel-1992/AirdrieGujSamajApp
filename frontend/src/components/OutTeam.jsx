@@ -9,9 +9,10 @@ import eshitaImg from "../assets/AboutUs/team/EshitaShah.jpg";
 import vaidehiImg from "../assets/AboutUs/team/VaidehiChokshiImg1.png";
 import mayushImg from "../assets/AboutUs/team/MayushPatel.jpg";
 import manImg from "../assets/AboutUs/team/MansukhRaval.jpg";
-import DashrathImg from "../assets/AboutUs/team/DashrathDesai.jpg";
+import DashrathImg from "../assets/AboutUs/team/DasharathDesai1.jpg";
 import sunilImg from "../assets/AboutUs/team/SunilPatel.jpg";
 import ishaImg from "../assets/AboutUs/team/IshaPatel.jpg";
+import adityaImg from "../assets/AboutUs/team/AdityaRavalEdited.png";
 
 export default function OurTeam() {
   const teamSections = [
@@ -51,9 +52,9 @@ export default function OurTeam() {
       members: [
         {
           name: "Eshita Shah",
-          role: "Coordinator",
+          role: "Cultural Director",
           img: eshitaImg,
-          bio: "Eshita leads initiatives that celebrate traditions and foster unity, creating inclusive and meaningful programs that strengthen all generations."
+          bio: "As a Cultural Director, I lead initiatives that celebrate traditions and foster unity, I take pride in uplifting others and bringing people together through cultural events and programs. My focus is on creating inclusive experiences that honor our heritage while embracing diversity."
         },
         {
           name: "Vaidehi Chokshi",
@@ -103,7 +104,7 @@ export default function OurTeam() {
       title: "Special Invited Members",
       intro: "Our Special Members contribute their expertise and volunteer support to enhance community programs, technology initiatives, and member engagement.",
       members: [
-        { name: "Aditya Raval", role: "Member" },
+        { name: "Aditya Raval", role: "Member", img: adityaImg , bio: "Aditya Raval is a long time member of the Airdrie Gujarati Samaj and a dedicated local business owner committed to strengthening community connections in Airdrie. With a deep appreciation for Gujarati culture and a passion for bringing people together, Adi helped establish the Samaj with the vision of creating a welcoming space where families can celebrate traditions, support one another, and build lasting relationships."},
         {
           name: "Jay Shah",
           role: "Member",
@@ -120,11 +121,19 @@ export default function OurTeam() {
     },
   ];
 
+  const getInitials = (fullName) => {
+  const parts = fullName.trim().split(" ");
+  const first = parts[0]?.[0] || "";
+  const last = parts[parts.length - 1]?.[0] || "";
+  return (first + last).toUpperCase();
+};
+
+
   return (
     <section className="py-20 bg-brand-cream min-h-screen">
       <div className="max-w-7xl mx-auto px-6">
 
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-center mb-16 text-brand tracking-tight animate-fadeIn">
+        <h2 className="text-3xl sm:text-4xl font-heading font-bold tracking-wide text-center mb-10 drop-shadow-lg" style={{ color: "#d4503e" }}>
           Our Team
         </h2>
 
@@ -160,7 +169,7 @@ export default function OurTeam() {
                         />
                       </div>
                     ) : (
-                      <div className="w-28 h-28 rounded-full bg-brand-mint text-white flex items-center justify-center text-4xl font-bold mb-4 shadow-md">
+                      <div className="w-28 h-28 rounded-full bg-brand-mint text-orange-600 flex items-center justify-center text-4xl font-bold mb-4 shadow-md">
                         {member.name.split(" ").map((n) => n[0]).join("")}
                       </div>
                     )}
