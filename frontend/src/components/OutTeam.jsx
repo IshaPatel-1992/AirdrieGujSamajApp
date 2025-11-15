@@ -116,7 +116,7 @@ export default function OurTeam() {
           img: ishaImg,
           bio: "Isha Patel is a Full Stack Developer and IT Specialist who supports the community with technology solutions, making processes smoother and more user-friendly."
         },
-        { name: "Roshan Patel", role: "Member" },
+        { name: "Roshan Patel", role: "Member", bio: "Roshan Patel is a dedicated member of the Airdrie Gujarati Samaj IT Committee, providing continuous technical support and innovation to strengthen our community's digital presence. With a passion for simplifying technology and improving user experience, his commitment and behind-the-scenes efforts help our community stay connected and organized throughout the year." },
       ],
     },
   ];
