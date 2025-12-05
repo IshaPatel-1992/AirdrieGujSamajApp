@@ -5,6 +5,9 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
+import teamRoutes from "./routes/teamRoutes.js";
+import eventRoutes from "./routes/eventRoutes.js";
+import sponsorsRoutes from "./routes/sponsorsRoutes.js";
 //import galleryRoutes from "./routes/galleryRoutes.js";
 
 dotenv.config();
@@ -41,6 +44,9 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/team", teamRoutes);
+app.use("/api/events", eventRoutes);
+app.use("/api/sponsors", sponsorsRoutes);
 //app.use("/api/gallery", galleryRoutes);
 
 

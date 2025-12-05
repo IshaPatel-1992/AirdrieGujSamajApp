@@ -1,5 +1,4 @@
 import React from "react";
-import membershipVideo from "../assets/bgImages/shutterstock_3686983631.mp4"; // Replace with your video path
 
 export default function MembershipInfo() {
   const memberships = [
@@ -37,9 +36,6 @@ export default function MembershipInfo() {
 
   return (
     <section className="relative w-full overflow-hidden">
-      {/* Overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-brand-mint/70 via-brand-cream/50 to-brand-saffron/70 z-10" />
-
       {/* Content */}
       <div className="relative z-20 p-6 sm:p-10 max-w-5xl mx-auto animate-fadeIn">
         <h2 className="text-3xl sm:text-4xl font-heading font-bold tracking-wide text-center mb-10 drop-shadow-lg" style={{ color: "#d4503e" }}>

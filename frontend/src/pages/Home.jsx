@@ -1,13 +1,13 @@
 import Hero from "../components/Hero";
 import AboutSection from "../components/AboutSection";
-import SponsorsSection from "../components/SponsorsSection";
+import Sponsors from "../components/Sponsors";
 
 export default function Home() {
   return (
     <>
       <Hero />
       <AboutSection />
-      <SponsorsSection />
+      <Sponsors />
     </>
   );
 }

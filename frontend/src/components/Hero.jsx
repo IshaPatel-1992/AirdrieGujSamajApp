@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import heroImage from "../assets/banners/BannerImgGuj.jpg";
 import { Link } from "react-router-dom";
+import UIButton from "./ui/UIButtons";
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -31,24 +32,6 @@ export default function Hero() {
           Welcome to{" "}
           <span className="text-brand-saffron">Airdrie Gujarati Samaj</span>
         </h2>
-
-        {/* Typewriter Main Heading */}
-        <h1 className="text-4xl md:text-6xl font-heading font-bold bg-gradient-to-r from-brand-saffron via-brand-mint to-brand-green bg-clip-text text-transparent drop-shadow-[0_3px_6px_rgba(0,0,0,0.6)]">
-          <Typewriter
-            words={[
-              "Embracing Tradition",
-              "Fostering Unity",
-              "Empowering Our Community",
-            ]}
-            loop={0}
-            cursor
-            cursorStyle="|"
-            typeSpeed={80}
-            deleteSpeed={40}
-            delaySpeed={1500}
-          />
-        </h1>
-
         {/* Main Tagline */}
         <h3 className="mt-6 inline-block text-lg md:text-xl font-semibold text-white bg-gradient-to-r from-brand-saffron to-brand-green px-8 py-3 rounded-lg shadow-lg">
           Let’s grow together, Let’s glow together
@@ -59,30 +42,18 @@ export default function Hero() {
           <p className="text-white text-base md:text-lg font-medium bg-black/30 px-6 py-2 rounded-md text-center">
             Don’t miss out! Membership registration begins March 2026
           </p>
-          <Link
-            to="/contact?from=membership"
-            className="bg-yellow-500 hover:bg-yellow-400 text-white font-semibold px-6 py-2 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
-          >
+          <UIButton to="/contact?from=membership" variant="yellow">
             Notify Me
-          </Link>
+          </UIButton>
         </div>
+
 
         {/* CTA Buttons */}
         <div className="mt-8 flex flex-wrap gap-4 justify-center">
-          <Link
-            to="/events"
-            className="bg-brand-saffron text-white font-semibold px-6 py-2 rounded-lg shadow hover:scale-105 hover:shadow-lg hover:brightness-110 transition-all duration-200"
-          >
-            Upcoming Events
-          </Link>
-
-          <Link
-            to="/contact"
-            className="bg-brand-green text-white font-semibold px-6 py-2 rounded-lg shadow hover:scale-105 hover:shadow-lg hover:brightness-110 transition-all duration-200"
-          >
-            Contact Us
-          </Link>
+          <UIButton to="/events" variant="saffron">Upcoming Events</UIButton>
+          <UIButton to="/contact" variant="green">Contact Us</UIButton>
         </div>
+
       </div>
     </section>
   );

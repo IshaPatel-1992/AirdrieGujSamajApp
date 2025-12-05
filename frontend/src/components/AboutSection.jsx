@@ -1,74 +1,70 @@
 import React from 'react';
-import { FaUsers, FaHandshake, FaLightbulb } from 'react-icons/fa';
-import aboutImage from '../assets/AboutUs/Team1.jpg'; // replace with your image path
+import aboutImage from '../assets/AboutUs/Team1.jpg';
+import UIButton from '../components/ui/UIButtons';
 
 export default function AboutSection() {
-  return (
-    <section id="aboutsection" className="bg-maple-soft text-white p-10 rounded-lg">
-      <div className="max-w-7xl mx-auto px-6 animate-fadeIn">
-        {/* Heading */}
-        <h2 className="text-3xl sm:text-4xl font-heading font-bold tracking-wide text-center mb-10 drop-shadow-lg" style={{ color: "#d4503e" }}>
-          About Us
-        </h2>
+return ( <section id="aboutsection" className="py-24 px-6 bg-white"> <div className="max-w-6xl mx-auto text-center lg:text-left">
+    {/* Heading */}
+    <h2 className="text-3xl md:text-5xl lg:text-6xl mb-16 font-heading font-extrabold text-brand-maple">
+      About Us
+    </h2>
 
-        {/* Content and Image */}
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-          {/* Text */}
-          <div className="lg:w-1/2 text-brand-text space-y-6 text-lg md:text-xl leading-relaxed font-serif">
-            <p>
-              <strong className="text-brand hover:text-brand-saffron">Airdrie Gujarati Samaj</strong> is a nonprofit, cultural, and charitable association 
-              established by the Gujarati community in Airdrie. It is dedicated to fostering <strong>community spirit</strong>, preserving our vibrant 
-              <strong> Gujarati heritage</strong>, and creating a warm, inclusive environment for families and individuals of all ages.
-            </p>
-            <p>
-              The organization hosts a variety of events throughout the year, including <strong>festivals, workshops, cultural performances</strong>, 
-              and <strong>community gatherings</strong>. These events bridge generations, support newcomers, and strengthen the ties that bind the community.
-            </p>
-            <p>
-              Beyond cultural celebrations, the Samaj actively promotes <strong>education and social welfare</strong> and builds strong relationships with 
-              other cultural organizations in the area.
-            </p>
-            <p>
-              Our mission is to foster a sense of <strong>belonging and pride</strong> among members and to promote an understanding and appreciation of Gujarati 
-              culture to all members of the Airdrie community. Join us in <strong>honoring traditions, sharing stories</strong>, and building a united and 
-              culturally rich Gujarati community in Airdrie — and beyond.
-            </p>
-          </div>
+    <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
 
-          {/* Image */}
-          <div className="lg:w-1/2 flex justify-center">
-            <img
-              src={aboutImage}
-              alt="Gujarati Community"
-              className="rounded-3xl shadow-lg object-cover w-full h-auto max-h-[500px] transition-transform duration-300 hover:scale-105"
-            />
-          </div>
-        </div>
-        {/* Membership Call-to-Action */}
-        <div className="bg-gradient-to-r from-brand-mint to-brand-cream text-brand-text p-12 rounded-3xl shadow-2xl text-center mt-20 space-y-6">
-          <h3 className="text-3xl md:text-4xl font-extrabold">Become a Member</h3>
-          <p className="text-lg md:text-xl font-medium">
-            Ready to be part of something meaningful? Enjoy exclusive events and community programs.
-          </p>
+      {/* Text */}
+      <div className="lg:w-1/2 space-y-6 text-justify lg:text-justify animation-fadeIn">
+        <p className="text-base md:text-lg leading-relaxed text-brand-text max-w-prose mx-auto lg:mx-0">
+          <strong className="text-brand-saffron">Airdrie Gujarati Samaj</strong> is a nonprofit cultural
+          and charitable association dedicated to promoting <strong>community spirit</strong>,
+          preserving <strong>Gujarati heritage</strong>, and fostering a welcoming environment for families.
+        </p>
 
-          <div className="flex justify-center gap-6 flex-wrap">
-            <a
-              href="/membershipinfo"
-              className="bg-brand-saffron hover:bg-brand-yellow text-brand-text font-semibold px-10 py-4 rounded-lg shadow-lg transition transform hover:scale-105 text-lg md:text-xl inline-block"
-            >
-              Join Us
-            </a>
+        <p className="text-base md:text-lg leading-relaxed text-brand-text max-w-prose mx-auto lg:mx-0">
+          We organize <strong>festivals, workshops, cultural performances</strong>, and
+          <strong> community gatherings</strong> throughout the year—bringing people together,
+          supporting newcomers, and strengthening our community bonds.
+        </p>
 
-            {/* 👇 New “Our Team” Button */}
-            <a
-              href="/ourteam"
-              className="bg-white hover:bg-brand-cream text-brand-text font-semibold px-10 py-4 rounded-lg shadow-lg transition transform hover:scale-105 text-lg md:text-xl inline-block border border-brand-saffron"
-            >
-              Our Team
-            </a>
-          </div>
-        </div>
+        <p className="text-base md:text-lg leading-relaxed text-brand-text max-w-prose mx-auto lg:mx-0">
+          Our initiatives also promote <strong>education</strong>, <strong>social welfare</strong>,
+          and collaboration with other cultural organizations, helping create a connected and engaged community.
+        </p>
+
+        <p className="text-base md:text-lg leading-relaxed text-brand-text max-w-prose mx-auto lg:mx-0">
+          Our mission is to inspire <strong>belonging, pride, and cultural appreciation</strong> within
+          the Gujarati and Airdrie communities. Join us in celebrating tradition, building unity, and
+          creating a bright cultural future.
+        </p>
       </div>
-    </section>
-  );
+
+      {/* Image */}
+      <div className="lg:w-1/2 flex justify-center">
+        <img
+          src={aboutImage}
+          alt="Gujarati Community"
+          loading="lazy"
+          className="rounded-3xl shadow-xl object-cover w-full max-w-[550px] h-auto transition-transform duration-300 hover:scale-105"
+        />
+      </div>
+    </div>
+
+    {/* CTA */}
+    <div className="bg-gradient-to-r from-brand-mint to-brand-cream p-8 rounded-3xl shadow-2xl mt-24 space-y-6 w-full">
+      <h3 className="text-2xl md:text-3xl font-extrabold tracking-tight text-brand-maple">
+        Become a Member
+      </h3>
+
+      <p className="text-base md:text-lg text-gray-700 leading-relaxed max-w-3xl">
+        Ready to join? Enjoy exclusive events, cultural programs, and community benefits.
+      </p>
+
+      <div className="flex flex-wrap gap-6 justify-center lg:justify-start">
+        <UIButton to="/membershipinfo" variant="saffron">Join Us</UIButton>
+        <UIButton to="/ourteam" variant="green">Our Team</UIButton>
+      </div>
+    </div>
+  </div>
+</section>
+
+);
 }
