@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { api } from "../api";
 
 export default function OurTeam() {
   const [team, setTeam] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedMap, setExpandedMap] = useState({});
 
-  useEffect(() => {
-    const fetchTeam = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/team");
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const data = await res.json();
-        setTeam(data);
-      } catch (err) {
-        console.error("Fetch Error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchTeam();
-  }, []);
+
+  useEffect(() => {
+  const fetchTeam = async () => {
+    try {
+      const data = await api.get("/api/team");
+      setTeam(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchTeam();
+}, []);
 
   const toggleExpanded = (id) => {
     setExpandedMap((prev) => ({ ...prev, [id]: !prev[id] }));
