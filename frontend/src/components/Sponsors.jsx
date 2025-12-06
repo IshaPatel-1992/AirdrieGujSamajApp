@@ -64,13 +64,11 @@ export default function SponsorsSection() {
   useEffect(() => {
     const fetchSponsors = async () => {
       try {
-        /* const apiUrl =
+        const apiUrl =
           process.env.NODE_ENV === "development"
             ? "http://localhost:5000/api/sponsors"
-            : "https://api.airdriegujaratisamaj.ca/api/sponsors"; */
-
-        const apiUrl = "http://localhost:5000/api/sponsors";
-
+            : "https://api.airdriegujaratisamaj.ca/api/sponsors"; 
+    
         const res = await fetch(apiUrl);
         const data = await res.json();
         setSponsors(data);

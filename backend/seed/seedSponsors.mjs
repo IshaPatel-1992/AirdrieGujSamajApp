@@ -6,8 +6,7 @@ import Sponsor from "../models/Sponsors.js";
 dotenv.config();
 
 // MongoDB URI
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://ags_db_user:d7qE23ygD8v33pBo@cluster0.cuxewus.mongodb.net/AirdrieGujSamaj?retryWrites=true&w=majority";
-
+const MONGO_URI = process.env.MONGO_URI;
 // Sponsor data
 const sponsors = [
   // Title Sponsors
