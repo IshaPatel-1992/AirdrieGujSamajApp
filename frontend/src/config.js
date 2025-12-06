@@ -1,7 +1,20 @@
-// src/config.js
+const isProd = process.env.NODE_ENV === "production";
 
-const isProduction = process.env.NODE_ENV === "production";
+export const API_BASE_URL = isProd
+  ? "https://airdriegujsamajapp.onrender.com" // temporary production URL
+  : "http://localhost:5000";
 
-export const API_BASE_URL = isProduction
-  ? process.env.REACT_APP_API_URL        // Production API from .env
-  : "http://localhost:5000";             // Dev API for local use
+export async function apiGet(path) {
+  try {
+    const res = await fetch(`${API_BASE_URL}${path}`);
+
+    if (!res.ok) {
+      throw new Error(`API Error: ${res.status}`);
+    }
+
+    return await res.json();
+  } catch (err) {
+    console.error("API GET ERROR:", err);
+    return null;
+  }
+}

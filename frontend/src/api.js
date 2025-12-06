@@ -1,28 +1,26 @@
 // src/api.js
 import { API_BASE_URL } from "./config";
 
+// General request function
 async function request(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint}`;
 
   try {
     const res = await fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       ...options,
     });
 
     if (!res.ok) {
-      const message = await res.text();
-      throw new Error(`API Error ${res.status}: ${message}`);
+      const text = await res.text();
+      throw new Error(`API Error ${res.status}: ${text}`);
     }
 
-    // Auto detect JSON vs empty response
     const text = await res.text();
     try {
       return JSON.parse(text);
     } catch {
-      return text; // non-JSON responses
+      return text;
     }
 
   } catch (err) {
@@ -31,13 +29,12 @@ async function request(endpoint, options = {}) {
   }
 }
 
-// Export helpers
+// Export helper methods
 export const api = {
-  get: (endpoint) => request(endpoint),
+  get: (endpoint) => request(endpoint, { method: "GET" }),
   post: (endpoint, body) =>
     request(endpoint, { method: "POST", body: JSON.stringify(body) }),
   put: (endpoint, body) =>
     request(endpoint, { method: "PUT", body: JSON.stringify(body) }),
-  del: (endpoint) =>
-    request(endpoint, { method: "DELETE" }),
+  delete: (endpoint) => request(endpoint, { method: "DELETE" }),
 };

@@ -6,15 +6,13 @@ export default function OurTeam() {
   const [loading, setLoading] = useState(true);
   const [expandedMap, setExpandedMap] = useState({});
 
-
-
   useEffect(() => {
   const fetchTeam = async () => {
     try {
-      const data = await api.get("/api/team");
+      const data = await api.get("/api/team"); // ✅ api.get() exists
       setTeam(data);
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching team:", err);
     } finally {
       setLoading(false);
     }
