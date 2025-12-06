@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { api } from "../api"; // same as OurTeam
 
 // UI Colors for each sponsor type
 const typeStyles = {
@@ -60,20 +61,17 @@ const SponsorGroup = ({ groupName, sponsors, onSponsorClick }) => {
 export default function SponsorsSection() {
   const [sponsors, setSponsors] = useState([]);
   const [selectedSponsor, setSelectedSponsor] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSponsors = async () => {
       try {
-        const apiUrl =
-          process.env.NODE_ENV === "development"
-            ? "http://localhost:5000/api/sponsors"
-            : "https://api.airdriegujaratisamaj.ca/api/sponsors"; 
-    
-        const res = await fetch(apiUrl);
-        const data = await res.json();
+        const data = await api.get("/api/sponsors"); // ✅ same pattern as OurTeam
         setSponsors(data);
       } catch (err) {
         console.error("Error fetching sponsors:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -94,8 +92,10 @@ export default function SponsorsSection() {
       (priorityOrder.indexOf(b) === -1 ? 999 : priorityOrder.indexOf(b))
   );
 
+  if (loading) return <p className="text-center mt-20">Loading Sponsors...</p>;
+
   return (
-    <section id="sponsors" className="py-20 bg-brand-cream">
+    <section id="sponsors" className="py-20 bg-brand-cream min-h-screen">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-4xl font-extrabold text-center text-brand mb-16 tracking-tight">
           Our Valued Sponsors
