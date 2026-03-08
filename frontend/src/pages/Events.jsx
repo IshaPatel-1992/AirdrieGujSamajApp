@@ -59,7 +59,7 @@ export default function EventsPage() {
                       <img
                         src={event.image.url}
                         alt={event.title}
-                        className="h-56 w-full object-cover transition duration-500 group-hover:scale-105"
+                        className="h-50 w-full object-cover transition duration-500 group-hover:scale-105"
                       />
                     ) : (
                       <div className="flex h-56 w-full items-center justify-center bg-gray-200">
@@ -92,41 +92,29 @@ export default function EventsPage() {
                       {event.description}
                     </p>
 
-                    <div className="mt-5 space-y-2">
-                      {event.title === "Sundarkand Path" ? (
-                        <p className="text-brand-saffron font-semibold">
-                          {new Date(event.date).toLocaleDateString("en-GB", {
+                    <div className="mt-6 flex items-center justify-between gap-4 border-t border-gray-100 pt-4">
+                      <p className="text-brand-saffron font-semibold">
+                        {event.title === "Sundarkand Path"
+                          ? new Date(event.date).toLocaleDateString("en-GB", {
                             timeZone: "UTC",
                             day: "2-digit",
                             month: "short",
                             year: "numeric",
-                          })}
-                        </p>
-                      ) : (
-                        <p className="text-brand-saffron font-semibold">
-                          {new Date(event.date).toLocaleDateString("en-GB", {
+                          })
+                          : new Date(event.date).toLocaleDateString("en-GB", {
                             timeZone: "UTC",
                             month: "long",
                             year: "numeric",
                           })}
-                        </p>
-                      )}
-                    </div>
+                      </p>
 
-                    <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
-
-
-                      {event.registrationOpen ? (
+                      {event.registrationOpen && event.registrationLink && (
                         <button
                           onClick={() => window.open(event.registrationLink, "_blank")}
                           className="rounded-full bg-brand-saffron px-4 py-2 text-sm font-semibold text-white"
                         >
                           Register / RSVP
                         </button>
-                      ) : (
-                        <span className="rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-500">
-                          Coming Soon
-                        </span>
                       )}
                     </div>
                   </div>
