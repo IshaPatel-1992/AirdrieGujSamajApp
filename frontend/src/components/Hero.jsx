@@ -47,6 +47,15 @@ export default function Hero() {
           </UIButton>
         </div>
 
+        {/* Special Event Announcement */}
+        <div className="mt-4 bg-brand-saffron/90 text-black font-semibold px-6 py-3 rounded-lg shadow-lg">
+          🎉 Free Community Event – <span className="font-bold">Sundarkand Path</span>
+          <br />
+          Saturday, <span className="font-bold">18 April 2026</span> at <span className="font-bold">4:00 PM</span>
+          <br />
+          More details coming soon
+        </div>
+
 
         {/* CTA Buttons */}
         <div className="mt-8 flex flex-wrap gap-4 justify-center">
