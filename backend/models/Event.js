@@ -8,7 +8,9 @@ const eventSchema = new mongoose.Schema({
   image: {
     url: String,
     public_id: String
-  }
+  },
+  registrationOpen: Boolean,
+  registrationLink: String
 });
 
 export default mongoose.model("Events", eventSchema,"Events");

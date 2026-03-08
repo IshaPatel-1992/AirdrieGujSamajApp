@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { api } from "../api"; // centralized API helper like OurTeam
+import { api } from "../api";
 
 export default function EventsPage() {
   const [events, setEvents] = useState([]);
@@ -8,7 +8,7 @@ export default function EventsPage() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const data = await api.get("/api/events"); // ✅ using api.get
+        const data = await api.get("/api/events");
         setEvents(data);
       } catch (err) {
         console.error("Error fetching events:", err);
@@ -20,45 +20,121 @@ export default function EventsPage() {
     fetchEvents();
   }, []);
 
-  if (loading) return <p className="text-center mt-20">Loading Events...</p>;
+  if (loading) {
+    return (
+      <p className="mt-20 text-center text-lg font-medium text-brand">
+        Loading Events...
+      </p>
+    );
+  }
 
   return (
-    <section className="py-24 px-6 bg-brand-cream min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-extrabold text-center mb-12 text-brand">
-          Upcoming Events
-        </h2>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {events.map((event) => (
-            <div
-              key={event._id}
-              className="shadow-lg rounded-2xl p-6 bg-white transform hover:scale-105 hover:shadow-2xl transition duration-300"
-            >
-              {event.image?.url ? (
-                <img
-                  src={event.image.url}
-                  alt={event.title}
-                  className="w-full rounded-xl mb-4 object-cover max-h-60"
-                />
-              ) : (
-                <div className="w-full h-60 bg-gray-200 flex items-center justify-center rounded-xl mb-4">
-                  <span className="text-gray-500 text-xl">No Image</span>
-                </div>
-              )}
-
-              <h3 className="text-2xl font-bold text-brand mb-2">{event.title}</h3>
-              <p className="text-gray-600 mb-2">{event.description}</p>
-
-              <p className="text-brand-saffron font-semibold mt-2">
-                {new Date(event.date).toLocaleString("en-US", {
-                  month: "long",
-                  year: "numeric",
-                })}
-              </p>
-            </div>
-          ))}
+    <section className="min-h-screen bg-brand-cream px-6 py-24">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-14 text-center">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-brand">
+            Upcoming Events
+          </h2>
+          <p className="mt-3 text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+            Stay connected with our latest community gatherings, celebrations, and special events.
+          </p>
         </div>
+
+        {events.length === 0 ? (
+          <div className="rounded-3xl bg-white shadow-md p-10 text-center text-gray-500 text-lg">
+            No upcoming events available right now.
+          </div>
+        ) : (
+          <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
+            {events.map((event) => {
+              const eventDate = new Date(event.date);
+
+              return (
+                <article
+                  key={event._id}
+                  className="group overflow-hidden rounded-3xl bg-white shadow-md ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                >
+                  <div className="relative">
+                    {event.image?.url ? (
+                      <img
+                        src={event.image.url}
+                        alt={event.title}
+                        className="h-56 w-full object-cover transition duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="flex h-56 w-full items-center justify-center bg-gray-200">
+                        <span className="text-lg font-medium text-gray-500">
+                          No Image
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Date badge */}
+                    <div className="absolute left-4 top-4 rounded-2xl bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm">
+                      <p className="text-xs font-bold uppercase tracking-wide text-brand-saffron">
+                        {eventDate.toLocaleDateString("en-GB", { month: "short" })}
+                      </p>
+                      <p className="text-xl font-extrabold leading-none text-brand">
+                        {eventDate.toLocaleDateString("en-GB", { day: "2-digit" })}
+                      </p>
+                      <p className="mt-1 text-[11px] font-semibold text-gray-500">
+                        {eventDate.toLocaleDateString("en-GB", { year: "numeric" })}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <h3 className="line-clamp-2 text-2xl font-extrabold leading-snug text-brand">
+                      {event.title}
+                    </h3>
+
+                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-gray-600">
+                      {event.description}
+                    </p>
+
+                    <div className="mt-5 space-y-2">
+                      {event.title === "Sundarkand Path" ? (
+                        <p className="text-brand-saffron font-semibold">
+                          {new Date(event.date).toLocaleDateString("en-GB", {
+                            timeZone: "UTC",
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </p>
+                      ) : (
+                        <p className="text-brand-saffron font-semibold">
+                          {new Date(event.date).toLocaleDateString("en-GB", {
+                            timeZone: "UTC",
+                            month: "long",
+                            year: "numeric",
+                          })}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
+
+
+                      {event.registrationOpen ? (
+                        <button
+                          onClick={() => window.open(event.registrationLink, "_blank")}
+                          className="rounded-full bg-brand-saffron px-4 py-2 text-sm font-semibold text-white"
+                        >
+                          Register / RSVP
+                        </button>
+                      ) : (
+                        <span className="rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-500">
+                          Coming Soon
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
