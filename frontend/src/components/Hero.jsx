@@ -134,7 +134,7 @@ export default function Hero() {
 
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
                   <UIButton to="/events" variant="saffron">
-                    Event Details
+                    RSVP
                   </UIButton>
                   <UIButton to="/contact" variant="green">
                     Contact Us

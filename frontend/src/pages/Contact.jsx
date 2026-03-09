@@ -22,8 +22,8 @@ export default function Contact() {
             <FaEnvelope className="text-4xl text-yellow-500 mb-4" />
             <h3 className="text-2xl font-semibold mb-2">Email Us</h3>
             <p className="text-[#555] mb-4">Reach out via email and we will respond promptly.</p>
-            <a href="mailto:airdriegujaratisamaj@gmail.com" className="text-blue-600 font-medium underline break-all">
-              airdriegujaratimandal@gmail.com
+            <a href="mailto:info@airdriegujaratisamaj.ca" className="text-blue-600 font-medium underline break-all">
+             info@airdriegujaratisamaj.ca
             </a>
           </div>
         </div>
