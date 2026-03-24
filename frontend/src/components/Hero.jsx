@@ -118,7 +118,7 @@ export default function Hero() {
                     Saturday, 18 April 2026
                   </p>
                   <p className="text-base sm:text-lg font-semibold text-white">
-                    4:00 PM
+                    5:30 PM Onwards
                   </p>
                   <p className="text-base sm:text-lg font-semibold text-white">
                     Town &amp; Country Community Hall
