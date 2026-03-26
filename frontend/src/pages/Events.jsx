@@ -5,6 +5,7 @@ export default function EventsPage() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -72,13 +73,13 @@ export default function EventsPage() {
                     {/* Date badge */}
                     <div className="absolute left-4 top-4 rounded-2xl bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm">
                       <p className="text-xs font-bold uppercase tracking-wide text-brand-saffron">
-                        {eventDate.toLocaleDateString("en-GB", { month: "short" })}
+                        {eventDate.toLocaleDateString("en-GB", { timeZone: "UTC", month: "short" })}
                       </p>
                       <p className="text-xl font-extrabold leading-none text-brand">
-                        {eventDate.toLocaleDateString("en-GB", { day: "2-digit" })}
+                        {eventDate.toLocaleDateString("en-GB", { timeZone: "UTC", day: "2-digit" })}
                       </p>
                       <p className="mt-1 text-[11px] font-semibold text-gray-500">
-                        {eventDate.toLocaleDateString("en-GB", { year: "numeric" })}
+                        {eventDate.toLocaleDateString("en-GB", { timeZone: "UTC", year: "numeric" })}
                       </p>
                     </div>
                   </div>
